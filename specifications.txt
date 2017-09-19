@@ -1,0 +1,4 @@
+					REQUIREMENTS
+
+1. The application shall allow the user to view a given year one month at a time (monthly view)
+2. The application shall allow the user to view a given month one week at a time (weekly view)
