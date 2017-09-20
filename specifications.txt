@@ -6,7 +6,8 @@ Functional Requirements:
 4. The application shall allow the user to add an event with starting and ending time
 5. The application shall allow the user to set alerts (in the form of toast notifications), along with a selection of times to schedule the alert
 6. The application shall allow the user to choose from a selection of pre-defined themes for the calendar application
-
+7. The application shall allow the user to sort events into custom categories
+8. The application shall allow the user to search for events
 
 Definitions, Abbreviations, Acronyms:
 
