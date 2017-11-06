@@ -1,0 +1,18 @@
+Functional Requirements:
+
+1. The application shall allow the user to view a given year one month at a time (monthly view)
+2. The application shall allow the user to view a given month one week at a time (weekly view)
+3. The application shall allow the user to view all events in a day, from earliest to latest (daily view)
+4. The application shall allow the user to add an event with starting and ending time
+5. The application shall allow the user to set alerts (in the form of toast notifications), along with a selection of times to schedule the alert
+6. The application shall allow the user to choose from a selection of pre-defined themes for the calendar application
+7. The application shall allow the user to sort events into custom categories
+8. The application shall allow the user to search for events
+
+Definitions, Abbreviations, Acronyms:
+
+1. Event: Two kinds of events; built-in and user-defined.
+	  - Built-In: National holidays such as Halloween, Thanksgiving, Martin Luther King Jr. Day, etc.
+	  - User-Defined: Events that are scheduled by the user, such as birthdays, meetings, etc.
+2. Toast Notification: An alert will potentially take the form of a toast notification, which are the notifications
+		        that the Windows operating system pops up in the lower corner of the monitor. 
