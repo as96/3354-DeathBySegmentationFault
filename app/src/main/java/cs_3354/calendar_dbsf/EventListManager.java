@@ -28,7 +28,8 @@ public class EventListManager
      */
     public void addEvent(Event e)
     {
-        //TODO write method
+        //TODO implement binary insertion
+        events.add(e);
     }
 
     /**
@@ -70,7 +71,7 @@ public class EventListManager
                           ArrayList<Alarm> alarms,
                           String eType)
     {
-        //TODO write method
+        //TODO write method (Hajung)
     }
 
     /**
@@ -87,6 +88,7 @@ public class EventListManager
 
     /**
      * Returns a reference to the single instance of this class.
+     * A necessary part of the singleton design pattern.
      * @return An EventListManager object
      */
     public EventListManager getInstance()
@@ -101,6 +103,13 @@ public class EventListManager
      */
     public void removeEvent(Event e) throws NullPointerException
     {
-        //TODO write method
+        if(containsEvent(e))
+        {
+            events.remove(e);
+        }
+        else
+        {
+            throw new NullPointerException ("Event does not exist in list");
+        }
     }
 }
