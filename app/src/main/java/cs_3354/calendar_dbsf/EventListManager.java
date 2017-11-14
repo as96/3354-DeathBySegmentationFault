@@ -43,6 +43,18 @@ public class EventListManager
     }
 
     /**
+     * Determines whether an event exists within the list.
+     * A helper method for removeEvent() and editEvent().
+     *
+     * @param e The event being checked
+     * @return True if the event is in the list, false otherwise
+     */
+    public boolean containsEvent(Event e)
+    {
+        return events.contains(e);
+    }
+
+    /**
      * Edits an event that already exists
      * @param e the Event that will be edited
      * @param d the new Date of the event
