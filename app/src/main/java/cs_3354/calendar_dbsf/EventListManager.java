@@ -6,7 +6,8 @@ import java.util.List;
 
 /**
  * This class maintains a sorted list of events.
- * It uses the singleton design pattern to ensure there cannot be multiple lists.
+ * Events are sorted in chronological order.
+ * This class uses the singleton design pattern to ensure there cannot be multiple lists.
  *
  * Created by Grant M on 11/6/2017.
  */
@@ -24,11 +25,26 @@ public class EventListManager
 
     /**
      * Adds an Event to the list of events
+     * Uses a binary insertion to ensure the list stays sorted
      * @param e the Event to be added
      */
     public void addEvent(Event e)
     {
-        //TODO implement binary insertion
+        //Binary insertion
+        for(int i = 0; i < events.size(); i++)
+        {
+            //Loop through the list, checking each event one by one
+            //If the new event is before the event being checked, we have found our insertion point
+            if(e.compareTo(events.get(i)) <= 0)
+            {
+                events.add(i, e);
+                return;
+            }
+
+            //If not, keep iterating
+        }
+
+        //This statement will only be reached if the new event is the last one in the list
         events.add(e);
     }
 
