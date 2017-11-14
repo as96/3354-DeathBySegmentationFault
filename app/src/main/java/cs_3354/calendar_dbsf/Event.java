@@ -5,17 +5,18 @@ import java.util.Date;
 
 public class Event implements Comparable<Event>
 {
-    Date date;
+    Date startDate;
+    Date endDate;
     String name;
-    int startTime;
-    int endTime;
     ArrayList<Alarm> alarms;
     String eventType;
 
-    public Event(int y, int m, int d, String name, int startTime,
-                 int endTime, String eventType)
+    public Event(Date startDate, Date endDate, String name, String eventType)
     {
-
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.name = name;
+        this.eventType = eventType;
     }
 
     /**
@@ -27,23 +28,20 @@ public class Event implements Comparable<Event>
      */
     public int compareTo(Event other)
     {
-        return this.getDate().compareTo(other.getDate());
+        return this.getStartDate().compareTo(other.getStartDate());
     }
 
-    public Date getDate() { return date; }
+    public Date getEndDate()
+    {
+        return endDate;
+    }
 
     public String getName()
     {
         return name;
     }
 
-    public int getStartTime()
-    {
-        return startTime;
-    }
+    public Date getStartDate() { return startDate; }
 
-    public int getEndTime()
-    {
-        return endTime;
-    }
+
 }
