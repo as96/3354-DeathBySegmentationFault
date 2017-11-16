@@ -25,17 +25,17 @@ public class EventListManager
 
     /**
      * Adds an Event to the list of events
-     * Uses a binary insertion to ensure the list stays sorted
+     * Keeps the array sorted
      * @param e the Event to be added
      */
     public void addEvent(Event e)
     {
-        //Binary insertion
-        for(int i = 0; i < events.size(); i++)
+        //TODO binary insert would be more efficient here
+        for (int i = 0; i < events.size(); i++)
         {
             //Loop through the list, checking each event one by one
             //If the new event is before the event being checked, we have found our insertion point
-            if(e.compareTo(events.get(i)) <= 0)
+            if (e.compareTo(events.get(i)) <= 0)
             {
                 events.add(i, e);
                 return;
@@ -91,15 +91,33 @@ public class EventListManager
     }
 
     /**
-     * Takes in two dates and returns a list of any events that occur between the two dates
+     * Takes in two dates and returns a list of any events that overlap the date range (noninclusive)
      * @param start the starting date
      * @param end the ending date
      * @return an array of Events that occur between the start and end date
      */
     public Event[] getEventsBetween(Date start, Date end)
     {
-        //TODO write method
-        return null;
+        ArrayList<Event> resultsArrayList = new ArrayList<Event>();
+
+        //Note: this is a brute force algorithm
+        //But as far as I know there is no better way
+        //Because the list is sorted by start date, which does not correlate to end date
+        //So essentially we have to treat it like an unsorted list
+        for(int i = 0; i < events.size(); i++)
+        {
+            //If these conditions are true, then the event overlaps our date range
+            if(events.get(i).getStartDate().before(end))
+            {
+                if(events.get(i).getEndDate().after(start))
+                {
+                    resultsArrayList.add(events.get(i));
+                }
+            }
+
+        }
+
+        return resultsArrayList.toArray(new Event[0]);
     }
 
     /**
