@@ -55,8 +55,11 @@ public class EventListManager
      */
     public boolean checkTimeConflicts(Event e)
     {
-        //TODO write method
-        return false;
+        //Get a list of events that overlap with e
+        Event[] conflicts = getEventsBetween(e.getStartDate(), e.getEndDate());
+
+        //If the list is empty, there are no conflicts
+        return conflicts.length > 0;
     }
 
     /**
@@ -143,7 +146,7 @@ public class EventListManager
         }
         else
         {
-            throw new NullPointerException ("Event does not exist in list");
+            throw new NullPointerException ("Event not found in list");
         }
     }
 }
