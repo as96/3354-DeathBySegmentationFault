@@ -77,16 +77,14 @@ public class EventListManager
     /**
      * Edits an event that already exists
      * @param e the Event that will be edited
-     * @param d the new Date of the event
-     * @param sTime the new start time of the event
-     * @param eTime the new end time of the event
+     * @param newStart the new start date of the event
+     * @param newEnd the new end date of the event
      * @param alarms a list of alarms associated with the event
      * @param eType the type of the event
      */
     public void editEvent(Event e,
-                          Date d,
-                          int sTime,
-                          int eTime,
+                          Date newStart,
+                          Date newEnd,
                           ArrayList<Alarm> alarms,
                           String eType)
     {
