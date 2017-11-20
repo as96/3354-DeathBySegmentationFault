@@ -1,37 +1,37 @@
 package cs_3354.calendar_dbsf;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+
 /**
  * Created by Trent on 11/6/2017.
- * Barebones screen that will show when an alarm is triggered.
- * TO-DO: show name of event that the reminder is for.
- *        make the screen pretty.
+ * Dialogue box that will show when an alarm is triggered.
  */
 
-public class AlarmScreen extends Activity
+public class AlarmScreen extends DialogFragment
 {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.alarm_screen);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.event_alarm)
+                .setNegativeButton(R.string.dismiss, new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id){
+                        //User dismisses the alarm
+                    }
+                })
+                .setNeutralButton(R.string.snooze, new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id){
+                        //User hits the snooze button
+                    }
+                });
+
+        return builder.create();
 
     }
-
-    @Override
-    protected void onRestart(){super.onRestart();}
-
-    @Override
-    protected void onResume(){super.onResume();}
-
-    @Override
-    protected void onPause(){super.onPause();}
-
-    @Override
-    protected void onStop(){super.onStop();}
-
-    @Override
-    protected void onDestroy(){super.onDestroy();}
 }
