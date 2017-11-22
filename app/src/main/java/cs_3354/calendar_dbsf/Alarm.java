@@ -51,7 +51,7 @@ public class Alarm
         //This will start an AlarmManager that will bring up a dialogue box whenever
         //the time comes for the event that scheduled it.
         aManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(),
-                PendingIntent.getActivity(c, 1, intent, 0));
+                PendingIntent.getBroadcast(c, 1, intent, 0));
 
         Log.i("ALARM SET", "An alarm was set for " + String.valueOf(date.getTime()) + ". ");
 
