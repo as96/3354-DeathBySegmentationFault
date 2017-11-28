@@ -1,8 +1,15 @@
 package cs_3354.calendar_dbsf;
 
+import android.content.Context;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * This class maintains a sorted list of events.
@@ -14,6 +21,8 @@ import java.util.List;
 
 public class EventListManager
 {
+    private String fileName = "EventList.ser";
+
     private final EventListManager INSTANCE = new EventListManager();
 
     private List<Event> events;
@@ -145,6 +154,26 @@ public class EventListManager
         else
         {
             throw new NullPointerException ("Event not found in list");
+        }
+    }
+
+    /**
+     * Saves the event list to a file
+     * Allows for persistence between sessions
+     */
+    public void writeToFile(Context context)
+    {
+        try
+        {
+            FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(events);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 }
