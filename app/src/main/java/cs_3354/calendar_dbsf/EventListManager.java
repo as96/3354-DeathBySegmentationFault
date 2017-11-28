@@ -141,6 +141,15 @@ public class EventListManager
     }
 
     /**
+     * Reads in events that have been saved to a file
+     * @param context The app's current context
+     */
+    public void readFromFile(Context context)
+    {
+        //TODO: write method
+    }
+
+    /**
      * Removes an Event from the list of events
      * @param e the Event to be removed
      * @throws NullPointerException if the event is not found in the list
@@ -160,6 +169,7 @@ public class EventListManager
     /**
      * Saves the event list to a file
      * Allows for persistence between sessions
+     * @param context The app's current context
      */
     public void writeToFile(Context context)
     {
