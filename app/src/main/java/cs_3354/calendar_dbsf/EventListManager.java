@@ -23,7 +23,7 @@ public class EventListManager
 {
     private String fileName = "EventList.ser";
 
-    private final EventListManager INSTANCE = new EventListManager();
+    private static final EventListManager INSTANCE = new EventListManager();
 
     private List<Event> events;
 
@@ -101,6 +101,15 @@ public class EventListManager
     }
 
     /**
+     *
+     * @return an array of all events in the event list
+     */
+    public Event[] getAllEvents()
+    {
+        return events.toArray(new Event[0]);
+    }
+
+    /**
      * Takes in two dates and returns a list of any events that overlap the date range (noninclusive)
      * @param start the starting date
      * @param end the ending date
@@ -135,7 +144,7 @@ public class EventListManager
      * A necessary part of the singleton design pattern.
      * @return An EventListManager object
      */
-    public EventListManager getInstance()
+    public static EventListManager getInstance()
     {
         return INSTANCE;
     }
