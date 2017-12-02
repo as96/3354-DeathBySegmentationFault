@@ -6,12 +6,17 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="cs_3354.calendar_dbsf.DailyViewActivity"
-    tools:showIn="@layout/activity_daily_view">
+      tools:showIn="@layout/activity_daily_view"
+    android:id="@+id/scrollview">
 
     <TextView
+        android:id="@+id/dateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:text="@string/large_text"
+        android:textColor="@android:color/white"
+        android:textSize="36sp"
+        android:visibility="visible" />
 
 </android.support.v4.widget.NestedScrollView>
