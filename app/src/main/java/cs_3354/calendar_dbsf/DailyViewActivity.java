@@ -60,27 +60,33 @@ public class DailyViewActivity extends FragmentActivity
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed()
+    {
         super.onBackPressed();
     }
 
-    private class DayPagerAdapter extends FragmentStatePagerAdapter {
-        public DayPagerAdapter(FragmentManager fm){
+    private class DayPagerAdapter extends FragmentStatePagerAdapter
+    {
+        public DayPagerAdapter(FragmentManager fm)
+        {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int position){
+        public Fragment getItem(int position)
+        {
             savedDate = new Date().getTime() + (position - 50000) * MILLIS_IN_A_DAY;
             Bundle dateBundle = new Bundle();
             dateBundle.putLong("date", savedDate);
             DailyViewFragment dailyViewFragment = new DailyViewFragment();
             dailyViewFragment.setArguments(dateBundle);
             return dailyViewFragment;
+
         }
 
         @Override
-        public int getCount(){
+        public int getCount()
+        {
             return NUM_PAGES;
         }
     }
