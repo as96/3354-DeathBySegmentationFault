@@ -11,22 +11,26 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static java.util.Locale.getDefault;
+
 //A long containing the date in millis must be contained in the savedInstanceState.
-public class DailyViewActivity extends FragmentActivity
+public class DailyViewActivity extends AppCompatActivity
 {
 
     private static final int NUM_PAGES = 100000;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private DailyViewFragment dailyFragment1, dailyFragment2;
     long savedDate;
     private static final long MILLIS_IN_A_DAY = (1000 * 60 * 60 * 24);
+    static Toolbar toolbar;
     static Context context;
 
     @Override
@@ -36,8 +40,10 @@ public class DailyViewActivity extends FragmentActivity
         context = this;
         savedDate = new Date().getTime();
         setContentView(R.layout.activity_daily_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
+
+        /*toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,18 +65,27 @@ public class DailyViewActivity extends FragmentActivity
 
     }
 
+    public static void setToolbarTitle(String s)
+    {
+        toolbar.setTitle(s);
+    }
+
     @Override
-    public void onBackPressed(){
+    public void onBackPressed()
+    {
         super.onBackPressed();
     }
 
-    private class DayPagerAdapter extends FragmentStatePagerAdapter {
-        public DayPagerAdapter(FragmentManager fm){
+    private class DayPagerAdapter extends FragmentStatePagerAdapter
+    {
+        public DayPagerAdapter(FragmentManager fm)
+        {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int position){
+        public Fragment getItem(int position)
+        {
             savedDate = new Date().getTime() + (position - 50000) * MILLIS_IN_A_DAY;
             Bundle dateBundle = new Bundle();
             dateBundle.putLong("date", savedDate);
