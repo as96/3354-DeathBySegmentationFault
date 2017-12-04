@@ -29,13 +29,10 @@ public class MainActivity extends FragmentActivity {
     ImageView imageV;
     ImageButton themeButton;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         //setContentView(R.layout.activity_main);
         setContentView(R.layout.fragment_monthly_view);
 

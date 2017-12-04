@@ -19,10 +19,13 @@ import java.util.Date;
  * Creates the notification corresponding to an alarm.
  */
 
-public class AlarmNotification extends BroadcastReceiver {
+public class AlarmNotification extends BroadcastReceiver
+{
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent)
+    {
+        String eventName = intent.getStringExtra("Event Name");
         //Setting up the channel
         final String NOTIFICATION_CHANNEL_ID = "4655";
         String channelName = "AlarmChannel";
@@ -48,45 +51,13 @@ public class AlarmNotification extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 //Credit for icon goes to Freepik https://www.flaticon.com/authors/freepik
                 .setSmallIcon(R.drawable.alarm_icon)
-                .setContentTitle("Event is happening")
-                .setContentText("X Event is happening")
+                .setContentTitle("An event is happening!")
+                .setContentText(eventName)
                 .addAction(R.drawable.alarm_icon, "Dismiss", dpIntent)
                 .addAction(R.drawable.alarm_icon, "Snooze", spIntent)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setCategory(Notification.CATEGORY_REMINDER);
         notificationManager.notify(notificationID, builder.build());
-    }
-
-}
-
-class DismissNotification extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent){
-        int id = intent.getIntExtra("notificationId", 1);
-        NotificationManager notifManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notifManager.cancel(id);
-    }
-
-}
-
-class SnoozeNotification extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent){
-        AlarmManager aManager = context.getSystemService(AlarmManager.class);
-        Intent i = new Intent(context, AlarmNotification.class);
-
-        aManager.setExact(AlarmManager.RTC_WAKEUP,
-                new Date().getTime() + (1000 * 60 * 5),
-                 PendingIntent.getBroadcast(context, 1, i, 0));
-
-        //Unfortunately, it is not so simple to just send a broadcast to DismissNotification
-        //so we must duplicate its code.
-        int id = intent.getIntExtra("notificationID", 1);
-        NotificationManager notifManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notifManager.cancel(id);
-
     }
 
 }
