@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/start_time"
+                android:focusable="false"
                 android:inputType="time" />
 
             <EditText
@@ -69,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/end_time"
+                android:focusable="false"
                 android:inputType="time" />
 
             <LinearLayout
@@ -82,7 +84,8 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Create" />
+                    android:text="Create"
+                    android:onClick = "createEvent"/>
             </LinearLayout>
 
         </LinearLayout>
