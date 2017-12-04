@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 /**
@@ -46,12 +47,17 @@ public class Alarm
     long time;
     Context context;
     final static long ALARM_NOT_REPEATING = 0;
+    Event event;
 
-    public Alarm(GregorianCalendar cal, Context c){
+    public Alarm(GregorianCalendar cal, Context c, Event e)
+    {
+        event = e;
         setAlarm(cal.getTimeInMillis(), ALARM_NOT_REPEATING, c);
     }
 
-    public Alarm(GregorianCalendar cal, long i, Context c){
+    public Alarm(GregorianCalendar cal, long i, Context c, Event e)
+    {
+        event = e;
         setAlarm(cal.getTimeInMillis(), i, c);
     }
 
@@ -63,7 +69,12 @@ public class Alarm
      * @param i The interval in milliseconds (0 if alarm is not repeating) between triggers.
      * @param c The Context this alarm is made in.
      */
-    public void setAlarm(long t, long i, Context c){
+    public void setAlarm(long t, long i, Context c)
+    {
+
+        //Bundling the event name so the alarm knows what name to display
+        Bundle bundle = new Bundle();
+        bundle.putString("Event Name", event.getName());
 
         //Setting fields
         aManager = c.getSystemService(AlarmManager.class);
@@ -71,6 +82,7 @@ public class Alarm
         context = c;
         time = t;
         Intent intent = new Intent(c, AlarmNotification.class);
+        intent.putExtras(bundle);
         pIntent = PendingIntent.getBroadcast(c, 1, intent, 0);
 
         //Setting the alarm
@@ -90,7 +102,8 @@ public class Alarm
     /*
      * Removes/cancels the alarm
      */
-    public void deschedule(){
+    public void deschedule()
+    {
         aManager.cancel(pIntent);
     }
 
@@ -99,7 +112,8 @@ public class Alarm
      *
      * @param i The new interval.
      */
-    public void setInterval(long i){
+    public void setInterval(long i)
+    {
         deschedule();
         long currentTime = android.os.SystemClock.currentThreadTimeMillis();
         while (currentTime > time)
