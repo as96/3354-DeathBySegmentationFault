@@ -3,6 +3,7 @@ package cs_3354.calendar_dbsf;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Event implements Comparable<Event>, Serializable
 {
