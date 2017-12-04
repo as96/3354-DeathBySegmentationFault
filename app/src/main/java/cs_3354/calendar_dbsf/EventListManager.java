@@ -23,7 +23,7 @@ public class EventListManager
 {
     private String fileName = "EventList.ser";
 
-    private final EventListManager INSTANCE = new EventListManager();
+    private static final EventListManager INSTANCE = new EventListManager();
 
     private List<Event> events;
 
@@ -135,7 +135,7 @@ public class EventListManager
      * A necessary part of the singleton design pattern.
      * @return An EventListManager object
      */
-    public EventListManager getInstance()
+    public static EventListManager getInstance()
     {
         return INSTANCE;
     }
