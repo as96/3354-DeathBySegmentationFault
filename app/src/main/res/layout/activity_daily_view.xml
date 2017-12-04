@@ -15,6 +15,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
         android:clickable="true"
+        android:onClick="startCreateEventActivity"
         app:elevation="10dp"
         app:fabSize="normal"
         app:layout_anchor="@+id/daypager"
