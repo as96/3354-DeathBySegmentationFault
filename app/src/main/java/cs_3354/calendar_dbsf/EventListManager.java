@@ -97,7 +97,18 @@ public class EventListManager
                           ArrayList<Alarm> alarms,
                           String eType)
     {
-        //TODO write method (Hajung)
+        e.setStart(newStart);
+        e.setEnd(newEnd);
+        e.setType(eType);
+    }
+
+    /**
+     *
+     * @return an array of all events in the event list
+     */
+    public Event[] getAllEvents()
+    {
+        return events.toArray(new Event[0]);
     }
 
     /**
