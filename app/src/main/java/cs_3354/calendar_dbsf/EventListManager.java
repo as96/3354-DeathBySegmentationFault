@@ -97,7 +97,9 @@ public class EventListManager
                           ArrayList<Alarm> alarms,
                           String eType)
     {
-        //TODO write method (Hajung)
+        e.setStart(newStart);
+        e.setEnd(newEnd);
+        e.setType(eType);
     }
 
     /**
