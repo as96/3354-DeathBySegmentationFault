@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * This class maintains a sorted list of events.
  * Events are sorted in chronological order.

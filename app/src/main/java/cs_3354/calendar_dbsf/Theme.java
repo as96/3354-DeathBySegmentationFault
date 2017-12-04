@@ -8,31 +8,37 @@ import android.graphics.Color;
 
 public class Theme
 {
-    String name;
-    Color primaryColor;
-    Color secondaryColor;
+    private String name;
+    private Color primaryColor;
+    private Color secondaryColor;
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public Color getPrimaryColor() {
+    public Color getPrimaryColor()
+    {
         return primaryColor;
     }
 
-    public void setPrimaryColor(Color primaryColor) {
+    public void setPrimaryColor(Color primaryColor)
+    {
         this.primaryColor = primaryColor;
     }
 
-    public Color getSecondaryColor() {
+    public Color getSecondaryColor()
+    {
         return secondaryColor;
     }
 
-    public void setSecondaryColor(Color secondaryColor) {
+    public void setSecondaryColor(Color secondaryColor)
+    {
         this.secondaryColor = secondaryColor;
     }
 }

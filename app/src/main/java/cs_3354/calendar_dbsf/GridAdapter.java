@@ -1,7 +1,7 @@
 package cs_3354.calendar_dbsf;
 
 /**
- * Created by Alec on 12/3/2017.
+ * Created by Alec on 12/2/2017.
  */
 
 import android.content.Context;
@@ -63,7 +63,7 @@ public class GridAdapter extends ArrayAdapter
             view.setBackgroundColor(Color.parseColor("#cccccc"));
         }
 
-        //Add day to calendar
+        //Add days to calendar
         TextView cellNumber = (TextView)view.findViewById(R.id.calendar_date_id);
         cellNumber.setText(String.valueOf(dayValue));
 

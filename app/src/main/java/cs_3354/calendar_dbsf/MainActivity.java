@@ -2,26 +2,18 @@ package cs_3354.calendar_dbsf;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import junit.framework.Assert;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 //MainActivity acts as "MonthlyViewActivity" since it is
 public class MainActivity extends FragmentActivity {
@@ -38,8 +30,6 @@ public class MainActivity extends FragmentActivity {
     ImageButton themeButton;
 
 
-    Theme theme;
-    Image calImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,6 +47,7 @@ public class MainActivity extends FragmentActivity {
         //imageV.setImageResource(getDrawable(this, currentMonth));
 
         CustomCalendarView mView = (CustomCalendarView) findViewById(R.id.custom_calendar);
+        imageV.getDrawable();
         mPager = (ViewPager)findViewById(R.id.monthPager);
         mPagerAdapter = new MonthPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
