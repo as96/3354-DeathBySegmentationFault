@@ -73,13 +73,5 @@ public class DeleteEvent extends DialogFragment
         EventListManager eventListManager = EventListManager.getInstance();
         Event[] events = eventListManager.getEventsBetween(new Date(eventTime - 1), new Date(eventTime + 1));
         eventListManager.removeEvent(events[0]);
-        EventListManager e = EventListManager.getInstance();
-        Date d = new Date();
-        d.setTime(d.getTime() - 999999999);
-        Event[] events2 = e.getEventsBetween(d, new Date());
-        for (Event event3 : events2)
-        {
-            Log.i("hai:DD", event3.getName());
-        }
     }
 }

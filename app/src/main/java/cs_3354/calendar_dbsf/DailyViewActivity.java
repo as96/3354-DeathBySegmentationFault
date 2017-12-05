@@ -27,7 +27,7 @@ public class DailyViewActivity extends AppCompatActivity
 
     private static final int NUM_PAGES = 100000;
     private ViewPager mPager;
-    private PagerAdapter mPagerAdapter;
+    private static PagerAdapter mPagerAdapter;
     long savedDate;
     private static final long MILLIS_IN_A_DAY = (1000 * 60 * 60 * 24);
     static Toolbar toolbar;
@@ -41,33 +41,16 @@ public class DailyViewActivity extends AppCompatActivity
         savedDate = new Date().getTime();
         setContentView(R.layout.activity_daily_view);
 
-        /*toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-
         mPager = (ViewPager)findViewById(R.id.daypager);
         mPagerAdapter = new DayPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(50000);
 
-        GregorianCalendar cal = new GregorianCalendar();
-        //cal.setTimeInMillis(savedDate);
-
     }
 
-    public static void setToolbarTitle(String s)
+    public static FragmentStatePagerAdapter getAdapter()
     {
-        toolbar.setTitle(s);
+        return (FragmentStatePagerAdapter)mPagerAdapter;
     }
 
     @Override

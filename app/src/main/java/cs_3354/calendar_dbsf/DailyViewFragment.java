@@ -1,21 +1,14 @@
 package cs_3354.calendar_dbsf;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -29,13 +22,14 @@ import static java.util.Locale.getDefault;
 
 public class DailyViewFragment extends Fragment {
 
-    Context c;
+    private LinearLayout layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View v = inflater.inflate(R.layout.content_daily_view, container, false);
-        LinearLayout layout = (LinearLayout) v.findViewById(R.id.linear_layout);
+        final ViewGroup viewGroup = container;
+        final View v = inflater.inflate(R.layout.content_daily_view, container, false);
+        layout = (LinearLayout) v.findViewById(R.id.linear_layout);
         GregorianCalendar cal = new GregorianCalendar();
         Bundle dateBundle = getArguments();
         long time = dateBundle.getLong("date", 0);
@@ -58,7 +52,8 @@ public class DailyViewFragment extends Fragment {
         Event[] events = eventManager.getEventsBetween(earliestOfDay, latestOfDay);
         for (int i = 0; i < events.length; i++)
         {
-            Button event = new Button(getActivity());
+            final long startTime = events[i].getStartDate().getTime();
+            final Button event = new Button(getActivity());
             event.setTextColor(Color.BLACK);
             int startHour = events[i].getStartDate().getHours();
             String hour = startHour > 12 ? "PM" : "AM";
@@ -67,6 +62,13 @@ public class DailyViewFragment extends Fragment {
                             events[i].getStartDate().getMinutes() + " " +
                             hour + " " + events[i].getName());
             layout.addView(event);
+            event.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    DeleteEvent dialog = DeleteEvent.newInstance(startTime);
+                    dialog.setParams(layout, event);
+                    dialog.show(getActivity().getFragmentManager(), "dialog");
+                }
+            });
         }
 
 
