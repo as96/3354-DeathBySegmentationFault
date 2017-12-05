@@ -6,6 +6,7 @@ package cs_3354.calendar_dbsf;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,6 @@ public class GridAdapter extends ArrayAdapter
     private Calendar currentDate;
     private List<Event> allEvents;
 
-
-    //Make a way to paramterize the color string? Maybe a makeColorString method?
 
     public GridAdapter(Context context, List<Date> monthlyDates, Calendar currentDate, List<Event> allEvents)
     {
@@ -50,6 +49,8 @@ public class GridAdapter extends ArrayAdapter
         int currentMonth = currentDate.get(Calendar.MONTH) + 1;
         int currentYear = currentDate.get(Calendar.YEAR);
         View view = convertView;
+
+        //Colors the days that belong to the current month and year
         if(view == null)
         {
             view = mInflater.inflate(R.layout.single_cell_layout, parent, false);
@@ -99,5 +100,13 @@ public class GridAdapter extends ArrayAdapter
     public int getPosition(Object item)
     {
         return monthlyDates.indexOf(item);
+    }
+
+    public long getDate(int position)
+    {
+        Date mDate = monthlyDates.get(position);
+        Log.wtf("Date", String.valueOf(mDate));
+        return mDate.getTime();
+
     }
 }

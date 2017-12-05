@@ -22,6 +22,7 @@ public class DailyViewActivity extends FragmentActivity
     private PagerAdapter mPagerAdapter;
     private DailyViewFragment dailyFragment1, dailyFragment2;
     long savedDate;
+    public static final String sDate = "sDate";
     private static final long MILLIS_IN_A_DAY = (1000 * 60 * 60 * 24);
     static Context context;
 
@@ -31,6 +32,15 @@ public class DailyViewActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         context = this;
         savedDate = new Date().getTime();
+        if(getIntent() != null)
+        {
+            if(!getIntent().hasExtra(sDate))
+            {
+
+            }
+
+            savedDate = getIntent().getLongExtra(sDate, savedDate);
+        }
         setContentView(R.layout.activity_daily_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         /*setSupportActionBar(toolbar);
@@ -71,9 +81,10 @@ public class DailyViewActivity extends FragmentActivity
         @Override
         public Fragment getItem(int position)
         {
-            savedDate = new Date().getTime() + (position - 50000) * MILLIS_IN_A_DAY;
+            long dailyDate = savedDate;
+            dailyDate += (position - 50000) * MILLIS_IN_A_DAY;
             Bundle dateBundle = new Bundle();
-            dateBundle.putLong("date", savedDate);
+            dateBundle.putLong("date", dailyDate);
             DailyViewFragment dailyViewFragment = new DailyViewFragment();
             dailyViewFragment.setArguments(dateBundle);
             return dailyViewFragment;

@@ -7,15 +7,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
  * Created by Alec and Hajung 11/30/17
  */
-public class MonthlyViewFragment extends Fragment {
+public class MonthlyViewFragment extends Fragment
+{
 
-    Context context;
-    public MonthlyViewFragment() {
+
+    public MonthlyViewFragment()
+    {
         // Required empty public constructor
     }
 
@@ -23,18 +30,19 @@ public class MonthlyViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //I'm supposed to instantiate the Custom Calendar View
         View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
-        //This is where we set up the calendar
 
+        //here be testing garbage
+        GregorianCalendar cal = new GregorianCalendar();
+        Bundle dateBundle = getArguments();
+        long time = dateBundle.getLong("date");
+        cal.setTimeInMillis(time);
+        CustomCalendarView ccv = new CustomCalendarView(v.getContext());
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.addView(ccv);
+        //
 
         return v;
     }
-
-    public void setTheme(View v)
-    {
-       Intent intent = new Intent(v.getContext(), themeActivity.class);
-       startActivity(intent);
-
-    }
-
 }
