@@ -1,9 +1,13 @@
 package cs_3354.calendar_dbsf;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +33,7 @@ public class EventListManager
 
     private EventListManager()
     {
-        events = new ArrayList<Event>();
+        readFromFile();
     }
 
     /**
@@ -55,6 +59,7 @@ public class EventListManager
 
         //This statement will only be reached if the new event is the last one in the list
         events.add(e);
+        writeToFile();
     }
 
     /**
@@ -100,6 +105,7 @@ public class EventListManager
         e.setStart(newStart);
         e.setEnd(newEnd);
         e.setType(eType);
+        writeToFile();
     }
 
     /**
@@ -153,11 +159,30 @@ public class EventListManager
 
     /**
      * Reads in events that have been saved to a file
-     * @param context The app's current context
      */
-    public void readFromFile(Context context)
+    public void readFromFile()
     {
-        //TODO: write method
+        events = new ArrayList<Event>();
+        FileInputStream fis;
+        try
+        {
+            fis = App.getContext().openFileInput(fileName);
+            ObjectInputStream oi = new ObjectInputStream(fis);
+            events = (ArrayList<Event>)oi.readObject();
+            oi.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            Log.e("InternalStorage", e.getMessage());
+        }
+        catch (IOException e)
+        {
+            Log.e("InternalStorage", e.getMessage());
+        }
+        catch (ClassNotFoundException e)
+        {
+            Log.e("InternalStorage", e.getMessage());
+        }
     }
 
     /**
@@ -170,6 +195,7 @@ public class EventListManager
         if(containsEvent(e))
         {
             events.remove(e);
+            writeToFile();
         }
         else
         {
@@ -180,21 +206,21 @@ public class EventListManager
     /**
      * Saves the event list to a file
      * Allows for persistence between sessions
-     * @param context The app's current context
      */
-    public void writeToFile(Context context)
+    public void writeToFile()
     {
         try
         {
-            FileOutputStream fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            FileOutputStream fileOutputStream = App.getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(events);
+            objectOutputStream.flush();
             objectOutputStream.close();
             fileOutputStream.close();
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            Log.e("InternalStorage", e.getMessage());
         }
     }
 }
