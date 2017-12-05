@@ -78,7 +78,8 @@ public class DailyViewActivity extends AppCompatActivity
         }
 
         @Override
-        public int getCount(){
+        public int getCount()
+        {
             return NUM_PAGES;
         }
     }
