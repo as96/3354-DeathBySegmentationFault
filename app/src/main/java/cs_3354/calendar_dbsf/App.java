@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 /**
+ * This class is used to keep track of the application context
+ * It allows EventListManager to read and write to a file
  * Created by grant on 12/5/2017.
  */
 
