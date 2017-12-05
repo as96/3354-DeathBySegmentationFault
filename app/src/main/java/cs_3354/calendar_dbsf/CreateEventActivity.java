@@ -30,11 +30,6 @@ public class CreateEventActivity extends AppCompatActivity
     Date startDate;
     Date endDate;
 
-    boolean startDateSet = false;
-    boolean startTimeSet = false;
-    boolean endDateSet = false;
-    boolean endTimeSet = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -42,12 +37,14 @@ public class CreateEventActivity extends AppCompatActivity
         setContentView(R.layout.activity_create_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Create Event");
 
-        startDate = new Date();
-        endDate = new Date();
+        startDate = new Date(currentYear, currentMonth, currentDay, currentHour, currentMinute);
+        endDate = new Date(currentYear, currentMonth, currentDay, currentHour, currentMinute);
 
         initDatePickers();
         initTimePickers();
+        initToCurrentTime();
     }
 
     /**
@@ -59,40 +56,16 @@ public class CreateEventActivity extends AppCompatActivity
     {
         EditText nameBox = (EditText)findViewById(R.id.text_name);
         name = nameBox.getText().toString();
+
         if(name.length() < 1)
         {
-            Toast.makeText(CreateEventActivity.this, "Please name the event",
+            Toast.makeText(CreateEventActivity.this, "Please create an event name",
                     Toast.LENGTH_SHORT).show();
             return;
         }
 
         EditText typeBox = (EditText)findViewById(R.id.text_type);
         type = typeBox.getText().toString();
-
-        if(!startDateSet)
-        {
-            Toast.makeText(CreateEventActivity.this, "Please choose a start date",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(!startTimeSet)
-        {
-            Toast.makeText(CreateEventActivity.this, "Please choose a start time",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(!endDateSet)
-        {
-            Toast.makeText(CreateEventActivity.this, "Please choose an end date",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(!endTimeSet)
-        {
-            Toast.makeText(CreateEventActivity.this, "Please choose an end time",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         //TODO check for time conflicts
 
@@ -125,8 +98,6 @@ public class CreateEventActivity extends AppCompatActivity
                         //Set the text box to reflect the chosen date
                         //Note: we must add 1 to the month because it is zero-indexed
                         startDateBox.setText((int)(selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear);
-
-                        startDateSet = true;
                     }
                 },currentYear, currentMonth, currentDay);
                 datePicker.setTitle("Select start date");
@@ -151,8 +122,6 @@ public class CreateEventActivity extends AppCompatActivity
                         //Set the text box to reflect the chosen date
                         //Note: we must add 1 to the month because it is zero-indexed
                         endDateBox.setText((int)(selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear);
-
-                        endDateSet = true;
                     }
                 },currentYear, currentMonth, currentDay);
                 datePicker.setTitle("Select end date");
@@ -184,8 +153,6 @@ public class CreateEventActivity extends AppCompatActivity
                         startDate.setMinutes(selectedMinute);
 
                         startTimeBox.setText( selectedHour + ":" + selectedMinute);
-
-                        startTimeSet = true;
                     }
                 }, currentHour, currentMinute, true);//24 hour time
                 timePicker.setTitle("Select start time");
@@ -210,13 +177,26 @@ public class CreateEventActivity extends AppCompatActivity
                         endDate.setMinutes(selectedMinute);
 
                         endTimeBox.setText( selectedHour + ":" + selectedMinute);
-
-                        endTimeSet = true;
                     }
                 }, currentHour, currentMinute, true);//24 hour time
                 timePicker.setTitle("Select end time");
                 timePicker.show();
             }
         });
+    }
+
+    private void initToCurrentTime()
+    {
+        EditText startTimeBox = (EditText)findViewById(R.id.text_startTime);
+        startTimeBox.setText(startDate.getHours() + ":" + startDate.getMinutes());
+
+        EditText endTimeBox = (EditText)findViewById(R.id.text_endTime);
+        endTimeBox.setText(endDate.getHours() + ":" + endDate.getMinutes());
+
+        EditText startDateBox = (EditText)findViewById(R.id.text_startDate);
+        startDateBox.setText((startDate.getMonth() + 1) + "/" + startDate.getDate() + "/" + startDate.getYear());
+
+        EditText endDateBox = (EditText)findViewById(R.id.text_endDate);
+        endDateBox.setText((endDate.getMonth() + 1) + "/" + endDate.getDate() + "/" + endDate.getYear());
     }
 }
