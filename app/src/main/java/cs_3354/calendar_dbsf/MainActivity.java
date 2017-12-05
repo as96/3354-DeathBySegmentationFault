@@ -36,13 +36,10 @@ public class MainActivity extends FragmentActivity {
     ImageView imageV;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         //setContentView(R.layout.activity_main);
         setContentView(R.layout.fragment_monthly_view);
         //CustomCalendarView c = new CustomCalendarView(context);
