@@ -43,7 +43,7 @@ public class DeleteEvent extends DialogFragment
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         return new AlertDialog.Builder(getActivity())
-                .setIcon(R.drawable.avd_hide_password_1)
+                .setIcon(R.drawable.notification_icon)
                 .setTitle("Delete event?")
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener()
