@@ -1,7 +1,9 @@
 package cs_3354.calendar_dbsf;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -59,7 +61,7 @@ public class CreateEventActivity extends AppCompatActivity
 
         if(name.length() < 1)
         {
-            Toast.makeText(CreateEventActivity.this, "Please create an event name",
+            Toast.makeText(CreateEventActivity.this, "Please input an event name",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -67,11 +69,37 @@ public class CreateEventActivity extends AppCompatActivity
         EditText typeBox = (EditText)findViewById(R.id.text_type);
         type = typeBox.getText().toString();
 
-        //TODO check for time conflicts
+        final Event newEvent = new Event(startDate, endDate, name, type);
+        final EventListManager elm = EventListManager.getInstance();
 
-        EventListManager elm = EventListManager.getInstance();
-        elm.addEvent(new Event(startDate, endDate, name, type));
-        finish();
+        //If there is a time conflict, display a dialog asking if this is okay
+        if(elm.checkTimeConflicts(newEvent))
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(CreateEventActivity.this).create();
+            alertDialog.setTitle("Time Conflict");
+            alertDialog.setMessage("This event overlaps another event. Is this okay?");
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            elm.addEvent(newEvent);
+                            finish();
+                        }
+                    });
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            return;
+                        }
+                    });
+            alertDialog.show();
+        }
+        else
+        {
+            elm.addEvent(newEvent);
+            finish();
+        }
     }
 
     /**
@@ -185,6 +213,9 @@ public class CreateEventActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Sets the value of the text fields to reflect the current date and time
+     */
     private void initToCurrentTime()
     {
         EditText startTimeBox = (EditText)findViewById(R.id.text_startTime);
