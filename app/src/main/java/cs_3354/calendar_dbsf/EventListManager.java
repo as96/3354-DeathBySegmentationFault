@@ -33,7 +33,9 @@ public class EventListManager
 
     private EventListManager()
     {
-        readFromFile();
+        events = new ArrayList<Event>();
+
+        //TODO read events from file here
     }
 
     /**
