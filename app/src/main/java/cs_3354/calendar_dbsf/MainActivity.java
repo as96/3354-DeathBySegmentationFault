@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import junit.framework.Assert;
@@ -23,7 +24,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-//MainActivity acts as "MonthlyViewActivity" since it is
 public class MainActivity extends FragmentActivity {
 
     private static final int NUM_PAGES = 100000;
@@ -49,10 +49,28 @@ public class MainActivity extends FragmentActivity {
 
         App.setContext(this);
 
+        CalendarView calendarView = (CalendarView)findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+        {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year,
+                                            int month, int dayOfMonth)
+            {
+                Date selectedDate = new Date(year - 1900, month, dayOfMonth);
+
+                Intent intent = new Intent(MainActivity.this, DailyViewActivity.class);
+                intent.putExtra(DailyViewActivity.sDate, selectedDate.getTime());
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        //Old way of scrolling through months
+        /*
         mPager = (ViewPager)findViewById(R.id.monthPager);
         mPagerAdapter = new MonthPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(5000);
+        */
 
 //        Intent intent = new Intent(this, DailyViewActivity.class);
 //        startActivity(intent);*/
@@ -75,6 +93,7 @@ public class MainActivity extends FragmentActivity {
         return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
     }
 
+    /*
     private class MonthPagerAdapter extends FragmentStatePagerAdapter
     {
         public MonthPagerAdapter(FragmentManager fm)
@@ -100,4 +119,5 @@ public class MainActivity extends FragmentActivity {
             return NUM_PAGES;
         }
     }
+    */
 }

@@ -45,7 +45,7 @@ public class DailyViewActivity extends AppCompatActivity
         savedDate = new Date().getTime();
         if(getIntent() != null)
         {
-            if(!getIntent().hasExtra(sDate))
+            if(getIntent().hasExtra(sDate))
             {
 
             }

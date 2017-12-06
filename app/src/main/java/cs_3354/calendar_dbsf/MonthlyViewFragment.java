@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,7 +42,7 @@ public class MonthlyViewFragment extends Fragment
         //fragmentDate.setTime(savedInstanceState.getLong("date"));
         // Inflate the layout for this fragment
         //I'm supposed to instantiate the Custom Calendar View
-        View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
+        final View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
 
         //Update calendar based on the provided date and time
         GregorianCalendar cal = new GregorianCalendar();
@@ -49,6 +50,22 @@ public class MonthlyViewFragment extends Fragment
         long time = dateBundle.getLong("date");
         cal.setTimeInMillis(time);
 
+        CalendarView calendarView = (CalendarView)v.findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
+        {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year,
+                                            int month, int dayOfMonth)
+            {
+                Date selectedDate = new Date(year - 1900, month, dayOfMonth);
+
+                Intent intent = new Intent(v.getContext(), DailyViewActivity.class);
+                intent.putExtra(DailyViewActivity.sDate, selectedDate.getTime());
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        /*
         //Set month label to the correct month
         TextView monthLabel = (TextView)v.findViewById(R.id.text_Month);
         int month = cal.getTime().getMonth();
@@ -59,6 +76,7 @@ public class MonthlyViewFragment extends Fragment
         TextView yearLabel = (TextView)v.findViewById(R.id.text_Year);
         int year = cal.getTime().getYear() + 1900;
         yearLabel.setText("" + year);
+        */
 
         return v;
     }
