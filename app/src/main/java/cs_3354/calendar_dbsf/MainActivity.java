@@ -41,36 +41,18 @@ public class MainActivity extends FragmentActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setContentView(R.layout.fragment_monthly_view);
-        //CustomCalendarView c = new CustomCalendarView(context);
         cal = new GregorianCalendar();
         cal.setTimeInMillis(new Date().getTime());
         long savedDate = new Date().getTime();
         Bundle bundle = new Bundle();
         bundle.putLong("date", savedDate);
 
-        //Intent intent = new Intent(this, MonthlyViewFragment.class);
-        //intent.putExtras(bundle);
-//        startActivity(intent);
-
-
-
-        //imageV = (ImageView) findViewById(R.id.calImageView);
-
         App.setContext(this);
-
-        //String currentMonth = Integer.toString(mPager.getCurrentItem());
-
-        //imageV.setImageResource(getDrawable(this, currentMonth));
-
-        //CustomCalendarView mView = (CustomCalendarView) findViewById(R.id.custom_calendar);
-
-        //imageV.getDrawable();
 
         mPager = (ViewPager)findViewById(R.id.monthPager);
         mPagerAdapter = new MonthPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(50000);
+        mPager.setCurrentItem(5000);
 
 //        Intent intent = new Intent(this, DailyViewActivity.class);
 //        startActivity(intent);*/
@@ -103,9 +85,10 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position)
         {
-            cal.add(Calendar.MONTH, position - 50000);
+            Calendar currentMonth = new GregorianCalendar();
+            currentMonth.add(Calendar.MONTH, position - 5000);
             Bundle bundle = new Bundle();
-            bundle.putLong("date", cal.getTimeInMillis());
+            bundle.putLong("date", currentMonth.getTimeInMillis());
             MonthlyViewFragment monthlyViewFragment = new MonthlyViewFragment();
             monthlyViewFragment.setArguments(bundle);
             return monthlyViewFragment;

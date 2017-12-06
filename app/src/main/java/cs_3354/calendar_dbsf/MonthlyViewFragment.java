@@ -43,16 +43,22 @@ public class MonthlyViewFragment extends Fragment
         //I'm supposed to instantiate the Custom Calendar View
         View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
 
-
+        //Update calendar based on the provided date and time
         GregorianCalendar cal = new GregorianCalendar();
         Bundle dateBundle = getArguments();
         long time = dateBundle.getLong("date");
         cal.setTimeInMillis(time);
 
+        //Set month label to the correct month
         TextView monthLabel = (TextView)v.findViewById(R.id.text_Month);
         int month = cal.getTime().getMonth();
         String monthString = new DateFormatSymbols().getMonths()[month];
         monthLabel.setText(monthString);
+
+        //Set year label to correct year
+        TextView yearLabel = (TextView)v.findViewById(R.id.text_Year);
+        int year = cal.getTime().getYear() + 1900;
+        yearLabel.setText("" + year);
 
         return v;
     }
