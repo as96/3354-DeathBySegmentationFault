@@ -97,7 +97,7 @@ public class CreateEventActivity extends AppCompatActivity
         //TODO check for time conflicts
 
         EventListManager elm = EventListManager.getInstance();
-        elm.addEvent(new Event(startDate, endDate, name, type));
+        elm.addEvent(new Event(startDate, endDate, name, type, this));
         finish();
     }
 

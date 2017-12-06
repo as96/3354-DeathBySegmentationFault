@@ -1,4 +1,6 @@
 package cs_3354.calendar_dbsf;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.app.AlarmManager;
@@ -45,6 +47,7 @@ public class Alarm
     PendingIntent pIntent;
     long interval;
     long time;
+    GregorianCalendar date;
     Context context;
     final static long ALARM_NOT_REPEATING = 0;
     Event event;
@@ -52,12 +55,14 @@ public class Alarm
     public Alarm(GregorianCalendar cal, Context c, Event e)
     {
         event = e;
+        date = cal;
         setAlarm(cal.getTimeInMillis(), ALARM_NOT_REPEATING, c);
     }
 
     public Alarm(GregorianCalendar cal, long i, Context c, Event e)
     {
         event = e;
+        date = cal;
         setAlarm(cal.getTimeInMillis(), i, c);
     }
 
@@ -92,10 +97,10 @@ public class Alarm
             aManager.setRepeating(AlarmManager.RTC_WAKEUP, time, i, pIntent);
 
         //Logging the alarm
-        String intText = (i == ALARM_NOT_REPEATING) ? "with intervals of " + String.valueOf(i)
+        String intText = (i == ALARM_NOT_REPEATING) ? " with intervals of " + String.valueOf(i)
                 + " milliseconds." : ". ";
         Log.i("ALARM SET", "An alarm was set for " +
-                String.valueOf(time) + intText);
+                new Date(time).toString() + intText);
 
     }
 
@@ -119,6 +124,11 @@ public class Alarm
         while (currentTime > time)
             time = time + i;
         setAlarm(time, i, context);
+    }
+
+    public GregorianCalendar getTime()
+    {
+        return date;
     }
 
 }

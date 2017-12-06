@@ -1,5 +1,7 @@
 package cs_3354.calendar_dbsf;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,13 +14,28 @@ public class Event implements Comparable<Event>, Serializable
     String name;
     ArrayList<Alarm> alarms;
     String eventType;
+    Alarm alarm;
 
-    public Event(Date startDate, Date endDate, String name, String eventType)
+    public Event(Date startDate, Date endDate, String name, String eventType, Context c)
     {
         this.startDate = startDate;
         this.endDate = endDate;
         this.name = name;
         this.eventType = eventType;
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(startDate.getTime());
+        alarm = new Alarm(cal, c, this);
+    }
+
+    public Event(Date startDate, Date endDate, String name, String eventType, int repeat, Context c)
+    {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.name = name;
+        this.eventType = eventType;
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(startDate.getTime());
+        alarm = new Alarm(cal, repeat*DailyViewFragmentPositioner.MILLIS_IN_A_DAY, c, this);
     }
 
     /**
