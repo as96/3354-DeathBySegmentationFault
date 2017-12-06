@@ -28,12 +28,25 @@ import static java.util.Locale.getDefault;
  * Created by Trent on 11/30/2017.
  */
 
+/**
+ * Handles the creation of the daily view fragment layout
+ */
 public class DailyViewFragment extends Fragment {
 
     private LinearLayout layout;
     private DailyViewFragment fragment;
     static HashMap<Long, DailyViewFragment> eventFragmentMap = new HashMap<>();
 
+    /**
+     * Creates the view hierarchy associated with this fragment
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be
+     *                  attached to. The fragment should not add the view itself, but this can
+     *                  be used to generate the LayoutParams of the view
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a
+     *                           previous saved state as given here.
+     * @return The instantiated view for this fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
@@ -77,6 +90,12 @@ public class DailyViewFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Adds an event on the appropriate daily view. This is a button because we can press it and
+     * take it to another activity.
+     * @param activity <-->TODO: This is never used, should it be?</-->
+     * @param e the event to be added as a button
+     */
     public void addEventButton(Activity activity, Event e)
     {
         final long startTime = e.getStartDate().getTime();

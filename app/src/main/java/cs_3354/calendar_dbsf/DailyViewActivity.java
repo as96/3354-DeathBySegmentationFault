@@ -23,7 +23,10 @@ import java.util.GregorianCalendar;
 
 import static java.util.Locale.getDefault;
 
-//A long containing the date in millis must be contained in the savedInstanceState.
+/**
+ * Handles the creation of the DailyViewActivity
+ * A long containing the date in millis must be contained in the savedInstanceState.
+ */
 public class DailyViewActivity extends AppCompatActivity
 {
 
@@ -36,6 +39,10 @@ public class DailyViewActivity extends AppCompatActivity
     static Toolbar toolbar;
     static Context context;
 
+    /**
+     * Handles the initial setup if the DailyViewActivity
+     * @param savedInstanceState saves the Instance state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -59,24 +66,44 @@ public class DailyViewActivity extends AppCompatActivity
 
     }
 
+    /**
+     * <-->TODO:Is this right?</-->
+     * Gets the fragment state pager adapter being used
+     * @return FragmentStatePagerAdapter being used
+     */
     public static FragmentStatePagerAdapter getAdapter()
     {
         return (FragmentStatePagerAdapter)mPagerAdapter;
     }
 
+    /**
+     * Handles when the user has pressed the back key
+     */
     @Override
     public void onBackPressed()
     {
         super.onBackPressed();
     }
 
+    /**
+     * An inline class that creates the DayPagerAdapter that permits swiping between fragments
+     */
     private class DayPagerAdapter extends FragmentStatePagerAdapter
     {
+        /**
+         * Constructor for the DayPagerAdapter.
+         * @param fm a FragmentManager that is used the superclass's constructor
+         */
         public DayPagerAdapter(FragmentManager fm)
         {
             super(fm);
         }
 
+        /**
+         * Gets the data item at the specified position in the data set. In this case, a fragment
+         * @param position the position of the fragment
+         * @return the fragment as the specified position
+         */
         @Override
         public Fragment getItem(int position)
         {
@@ -89,6 +116,10 @@ public class DailyViewActivity extends AppCompatActivity
             return dailyViewFragment;
         }
 
+        /**
+         * <-->TODO:Is this right?</-->
+         * @return the number of total pages the fragments use
+         */
         @Override
         public int getCount(){
             return NUM_PAGES;
@@ -96,6 +127,10 @@ public class DailyViewActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Creates an Intent to go to the event creation activity
+     * @param v a view that is associated with this action
+     */
     public void startCreateEventActivity(View v)
     {
         Intent intent = new Intent(DailyViewActivity.this, CreateEventActivity.class);

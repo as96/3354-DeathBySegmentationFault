@@ -4,8 +4,10 @@ import java.util.Date;
 
 /**
  * Created by Trent on 12/5/2017.
+ *
+ *Handles the positioning of the DailyViewFragment\
+ * <-->TODO:The getFragmentPosition method is never used, is this class really needed?</-->
  */
-
 public class DailyViewFragmentPositioner
 {
 

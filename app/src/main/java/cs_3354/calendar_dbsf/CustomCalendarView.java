@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,13 +48,7 @@ public class CustomCalendarView extends LinearLayout
         initializeUILayout();
         setUpCalendarAdapter();
         setGridCellClickEvents();
-        /*TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MonthlyViewFragment);
-        String s = "asdf";
-        s = (String)a.getString(R.styleable.MonthlyViewFragment_fragment_date);
-        Log.i("DATE,DUDE", String.valueOf(a.getIndexCount()));
-        long date = Long.decode(a.getString(R.styleable.MonthlyViewFragment_fragment_date));
-        fragmentDate = new Date(date);
-        Log.i("DATE,DUDE", fragmentDate.toString());*/
+
     }
 
     public CustomCalendarView(Context context, AttributeSet attrs, int defStyleAttr)
@@ -65,8 +60,6 @@ public class CustomCalendarView extends LinearLayout
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.calendar_layout, this);
-        Log.i("INFLATER,DUDE", inflater.toString());
-        inf = LayoutInflater.from(context);
         calendarGridView = (GridView)view.findViewById(R.id.calendar_grid);
     }
 
@@ -87,7 +80,7 @@ public class CustomCalendarView extends LinearLayout
 
     private void setUpCalendarAdapter(){
         List<Date> dayValueInCells = new ArrayList<>();
-        List<Event> eventList = new ArrayList<>();
+        List<Event> eventList = Arrays.asList(EventListManager.getInstance().getAllEvents());
         Calendar mCal = (Calendar)cal.clone();
         mCal.set(Calendar.DAY_OF_MONTH, 1);
         int firstDayOfTheMonth = mCal.get(Calendar.DAY_OF_WEEK) - 1;

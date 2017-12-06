@@ -17,8 +17,8 @@ import java.util.HashMap;
 
 /**
  * Created by Trent on 12/3/2017.
+ * This class handles all functions relating to event deletion
  */
-
 public class DeleteEvent extends DialogFragment
 {
 
@@ -31,6 +31,12 @@ public class DeleteEvent extends DialogFragment
     public DeleteEvent currentInstance;
     static HashMap<Event, DeleteEvent> deleteMapper = new HashMap<>();
 
+    /**
+     * <-->TODO:Is this right?</-->
+     * Creates a new instance of a DeleteEvent dialog
+     * @param date a date as a long, which will be passed along as the event time
+     * @return A dialog box that contains information of the event to delete
+     */
     public static DeleteEvent newInstance(long date)
     {
         DeleteEvent dialog = new DeleteEvent();
@@ -40,6 +46,12 @@ public class DeleteEvent extends DialogFragment
         return dialog;
     }
 
+    /**
+     *
+     * @param l
+     * @param b
+     * @param frag
+     */
     public void setParams(LinearLayout l, Button b, DailyViewFragment frag)
     {
         eventButton = b;
@@ -47,6 +59,11 @@ public class DeleteEvent extends DialogFragment
         dailyViewFragment = frag;
     }
 
+    /**
+     * Builds a custom dialog container
+     * @param savedInstanceState The last saved instance state of the Fragment, or null if this is a freshly created Fragment.
+     * @return Return a new Dialog instance to be displayed by the Fragment.
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -93,6 +110,11 @@ public class DeleteEvent extends DialogFragment
                 .create();
     }
 
+    /**
+     * <-->TODO:Is this right? Why are we storing events in an array?</-->
+     * Gets the event to be deleted
+     * @return
+     */
     public Event getEvent()
     {
         EventListManager eventListManager = EventListManager.getInstance();
@@ -100,6 +122,9 @@ public class DeleteEvent extends DialogFragment
         return events[0];
     }
 
+    /**
+     * Deletes the event from the EventListManager
+     */
     public void deleteEvent()
     {
         deleteButton();
@@ -107,11 +132,18 @@ public class DeleteEvent extends DialogFragment
         eventListManager.removeEvent(event);
     }
 
+    /**
+     * Sets the time
+     * @param t a date object that is in the form of a long
+     */
     public void setTime(long t)
     {
         time = t;
     }
 
+    /**
+     * Removes the event button when the event is deleted
+     */
     public void deleteButton()
     {
         layout.removeView(eventButton);

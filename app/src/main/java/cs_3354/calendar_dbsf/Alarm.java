@@ -52,6 +52,12 @@ public class Alarm
     final static long ALARM_NOT_REPEATING = 0;
     Event event;
 
+    /**
+     * Alarm constructor if an event is not repeating, takes in the following parameters:
+     * @param cal a Gregorian Calendar object
+     * @param c a Context
+     * @param e an Event object for which the alarm is associated with
+     */
     public Alarm(GregorianCalendar cal, Context c, Event e)
     {
         event = e;
@@ -59,6 +65,13 @@ public class Alarm
         setAlarm(cal.getTimeInMillis(), ALARM_NOT_REPEATING, c);
     }
 
+    /**
+     * Alarm constructor, if an event is selected to be repeated. Takes in the following parameters:
+     * @param cal a Gregorian Calendar object
+     * @param i a long
+     * @param c a Context
+     * @param e an Event object for which the alarm is associated with
+     */
     public Alarm(GregorianCalendar cal, long i, Context c, Event e)
     {
         event = e;
@@ -67,9 +80,8 @@ public class Alarm
     }
 
 
-    /*
+    /**
      *Sets an alarm.
-     *
      * @param t The time (or first time if repeating) in milliseconds to trigger at.
      * @param i The interval in milliseconds (0 if alarm is not repeating) between triggers.
      * @param c The Context this alarm is made in.
@@ -104,7 +116,7 @@ public class Alarm
 
     }
 
-    /*
+    /**
      * Removes/cancels the alarm
      */
     public void deschedule()
@@ -112,9 +124,8 @@ public class Alarm
         aManager.cancel(pIntent);
     }
 
-    /*
+    /**<--TODO-->What does interval do?</--TODO-->
      * Changes the interval
-     *
      * @param i The new interval.
      */
     public void setInterval(long i)
@@ -126,6 +137,10 @@ public class Alarm
         setAlarm(time, i, context);
     }
 
+    /**
+     * TODO: What is stored in date?
+     * @return
+     */
     public GregorianCalendar getTime()
     {
         return date;

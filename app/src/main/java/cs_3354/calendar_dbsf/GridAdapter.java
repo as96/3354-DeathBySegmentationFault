@@ -4,18 +4,21 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Trent on 12/4/2017.
+ * Created by Alec on 12/2/2017.
  */
 
 public class GridAdapter extends ArrayAdapter
@@ -24,6 +27,7 @@ public class GridAdapter extends ArrayAdapter
     private List<Date> monthlyDates;
     private Calendar currentDate;
     private List<Event> allEvents;
+
 
     public GridAdapter(Context context, List<Date> monthlyDates, Calendar currentDate, List<Event> allEvents)
     {
@@ -66,6 +70,8 @@ public class GridAdapter extends ArrayAdapter
         TextView cellNumber = (TextView)view.findViewById(R.id.calendar_date_id);
         cellNumber.setText(String.valueOf(dayValue));
 
+        getCalendarEvents();
+
         //Add events to the calendar
         TextView eventIndicator = (TextView)view.findViewById(R.id.event_id);
         Calendar eventCalendar = Calendar.getInstance();
@@ -79,6 +85,15 @@ public class GridAdapter extends ArrayAdapter
             }
         }
         return view;
+    }
+
+    private void getCalendarEvents()
+    {
+        allEvents = new ArrayList<>(Arrays.asList(EventListManager.getInstance().getAllEvents()));
+        for (Event e : allEvents
+             ) {
+            Log.wtf("Event: ", String.valueOf(e));
+        }
     }
 
     @Override

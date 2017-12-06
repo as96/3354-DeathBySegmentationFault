@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import java.util.Date;
 
+/**
+ * Handles the creation of the CreateEventActivity.
+ */
 public class CreateEventActivity extends AppCompatActivity
 {
     Calendar currentDate = new GregorianCalendar();
@@ -28,6 +31,10 @@ public class CreateEventActivity extends AppCompatActivity
     Date startDate;
     Date endDate;
 
+    /**
+     * Handles the initial setup of the CreateEventActivity
+     * @param savedInstanceState saves the Instance state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
