@@ -1,23 +1,22 @@
 package cs_3354.calendar_dbsf;
 
-/**
- * Created by Alec on 12/2/2017.
- */
-
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+/**
+ * Created by Trent on 12/4/2017.
+ */
 
 public class GridAdapter extends ArrayAdapter
 {
@@ -25,7 +24,6 @@ public class GridAdapter extends ArrayAdapter
     private List<Date> monthlyDates;
     private Calendar currentDate;
     private List<Event> allEvents;
-
 
     public GridAdapter(Context context, List<Date> monthlyDates, Calendar currentDate, List<Event> allEvents)
     {
@@ -105,7 +103,6 @@ public class GridAdapter extends ArrayAdapter
     public long getDate(int position)
     {
         Date mDate = monthlyDates.get(position);
-        Log.wtf("Date", String.valueOf(mDate));
         return mDate.getTime();
 
     }

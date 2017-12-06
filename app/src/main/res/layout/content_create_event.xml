@@ -8,87 +8,136 @@
     tools:context="cs_3354.calendar_dbsf.CreateEventActivity"
     tools:showIn="@layout/activity_create_event">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:columnCount="2"
+            android:rowCount="5">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nameLabel"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <EditText
                 android:id="@+id/text_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:ems="10"
-                android:hint="@string/event_name"
-                android:inputType="text" />
+                android:inputType="text"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="47dp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/typeLabel"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <EditText
                 android:id="@+id/text_type"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:ems="10"
-                android:hint="@string/type"
-                android:inputType="text" />
+                android:inputType="text"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="93dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/startDateLabel"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <EditText
                 android:id="@+id/text_startDate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:ems="10"
-                android:hint="@string/start_date"
                 android:focusable="false"
-                android:inputType="date" />
+                android:inputType="date"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="155dp" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/startTimeLabel"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <EditText
                 android:id="@+id/text_startTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/start_time"
                 android:focusable="false"
                 android:inputType="time" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/endDateLabel"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <EditText
                 android:id="@+id/text_endDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/end_date"
                 android:focusable="false"
                 android:inputType="date" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/endTimeLabel"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <EditText
                 android:id="@+id/text_endTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/end_time"
                 android:focusable="false"
                 android:inputType="time" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+        </GridLayout>
 
-                <Button
-                    android:id="@+id/button_create"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="130dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Create"
-                    android:onClick = "createEvent"/>
-            </LinearLayout>
+        <Button
+            android:id="@+id/button_spacer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button"
+            android:visibility="invisible" />
 
-        </LinearLayout>
-    </ScrollView>
+        <Button
+            android:id="@+id/button_create3"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="createEvent"
+            android:text="Create"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="299dp" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

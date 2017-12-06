@@ -1,6 +1,7 @@
 package cs_3354.calendar_dbsf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Calendar;
@@ -38,6 +40,7 @@ public class DailyViewActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         context = this;
         savedDate = new Date().getTime();
         if(getIntent() != null)
@@ -92,5 +95,15 @@ public class DailyViewActivity extends AppCompatActivity
         public int getCount(){
             return NUM_PAGES;
         }
+    }
+
+
+    public void startCreateEventActivity(View v)
+    {
+        //TODO code is complete but will not work until this branch is merged
+        /*
+        Intent intent = new Intent(DailyViewActivity.this, CreateEventActivity.class);
+        DailyViewActivity.this.startActivity(intent);
+        */
     }
 }

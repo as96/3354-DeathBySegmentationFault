@@ -15,7 +15,6 @@ import android.util.Xml;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import junit.framework.Assert;
-
 import org.xmlpull.v1.XmlPullParser;
 
 import java.util.Calendar;
@@ -57,6 +56,8 @@ public class MainActivity extends FragmentActivity {
 
         imageV = (ImageView) findViewById(R.id.calImageView);
 
+        App.setContext(this);
+
         //String currentMonth = Integer.toString(mPager.getCurrentItem());
 
         //imageV.setImageResource(getDrawable(this, currentMonth));
@@ -70,14 +71,14 @@ public class MainActivity extends FragmentActivity {
         mPager.setCurrentItem(50000);
 
 //        Intent intent = new Intent(this, DailyViewActivity.class);
-//        startActivity(intent);
+//        startActivity(intent);*/
     }
 
     //Need methods that utilize setUpCalendarAdapter and change the month upon swipe
 
 
     //Will draw the calendar image
-    public static int getDrawable(Context context, String name)
+   /* public static int getDrawable(Context context, String name)
     {
         Assert.assertNotNull(context);
         Assert.assertNotNull(name);
@@ -108,5 +109,5 @@ public class MainActivity extends FragmentActivity {
         {
             return NUM_PAGES;
         }
-    }
+    }*/
 }
