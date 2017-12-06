@@ -12,7 +12,6 @@ public class Event implements Comparable<Event>, Serializable
     Date startDate;
     Date endDate;
     String name;
-    ArrayList<Alarm> alarms;
     String eventType;
     Alarm alarm;
 

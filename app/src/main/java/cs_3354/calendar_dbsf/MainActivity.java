@@ -78,7 +78,7 @@ public class MainActivity extends FragmentActivity {
 
 
     //Will draw the calendar image
-   /* public static int getDrawable(Context context, String name)
+    public static int getDrawable(Context context, String name)
     {
         Assert.assertNotNull(context);
         Assert.assertNotNull(name);
@@ -109,5 +109,5 @@ public class MainActivity extends FragmentActivity {
         {
             return NUM_PAGES;
         }
-    }*/
+    }
 }

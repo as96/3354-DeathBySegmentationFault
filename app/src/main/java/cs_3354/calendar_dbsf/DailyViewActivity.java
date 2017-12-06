@@ -100,10 +100,7 @@ public class DailyViewActivity extends AppCompatActivity
 
     public void startCreateEventActivity(View v)
     {
-        //TODO code is complete but will not work until this branch is merged
-        /*
         Intent intent = new Intent(DailyViewActivity.this, CreateEventActivity.class);
         DailyViewActivity.this.startActivity(intent);
-        */
     }
 }
