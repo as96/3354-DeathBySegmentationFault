@@ -2,18 +2,23 @@ package cs_3354.calendar_dbsf;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.Inflater;
 
 /**
  * Created by Alec on 12/2/2017.
@@ -26,8 +31,10 @@ public class CustomCalendarView extends LinearLayout
     private int month, year;
     private SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", Locale.US);
     private Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+    private Date fragmentDate;
     private Context context;
     private GridAdapter mAdapter;
+    private LayoutInflater inf;
 
     public CustomCalendarView(Context context)
     {
@@ -41,6 +48,13 @@ public class CustomCalendarView extends LinearLayout
         initializeUILayout();
         setUpCalendarAdapter();
         setGridCellClickEvents();
+        /*TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MonthlyViewFragment);
+        String s = "asdf";
+        s = (String)a.getString(R.styleable.MonthlyViewFragment_fragment_date);
+        Log.i("DATE,DUDE", String.valueOf(a.getIndexCount()));
+        long date = Long.decode(a.getString(R.styleable.MonthlyViewFragment_fragment_date));
+        fragmentDate = new Date(date);
+        Log.i("DATE,DUDE", fragmentDate.toString());*/
     }
 
     public CustomCalendarView(Context context, AttributeSet attrs, int defStyleAttr)
@@ -52,6 +66,8 @@ public class CustomCalendarView extends LinearLayout
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.calendar_layout, this);
+        Log.i("INFLATER,DUDE", inflater.toString());
+        inf = LayoutInflater.from(context);
         calendarGridView = (GridView)view.findViewById(R.id.calendar_grid);
     }
 
@@ -66,9 +82,13 @@ public class CustomCalendarView extends LinearLayout
 
                 //Goes to daily view, but we need to pass the date along to go to the right day
                 Intent intent = new Intent(context, DailyViewActivity.class);
+                Date date = new Date();
+                //date.setTime(MonthlyViewFragment.inflaterDates.get(inf));
+                Bundle bundle = new Bundle();
+                Log.i("DATE,DUDE",date.toString());
+                bundle.putLong("date", date.getTime());
+                intent.putExtras(bundle);
                 context.startActivity(intent);
-
-
             }
         });
     }

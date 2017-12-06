@@ -13,6 +13,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Calendar;
@@ -29,7 +30,6 @@ public class DailyViewActivity extends AppCompatActivity
     private ViewPager mPager;
     private static PagerAdapter mPagerAdapter;
     long savedDate;
-    private static final long MILLIS_IN_A_DAY = (1000 * 60 * 60 * 24);
     static Toolbar toolbar;
     static Context context;
 
@@ -37,8 +37,9 @@ public class DailyViewActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         context = this;
-        savedDate = new Date().getTime();
+        savedDate = new Date().getTime();//savedInstanceState.getLong("date", new Date().getTime());
         setContentView(R.layout.activity_daily_view);
 
         mPager = (ViewPager)findViewById(R.id.daypager);
@@ -69,9 +70,8 @@ public class DailyViewActivity extends AppCompatActivity
         @Override
         public Fragment getItem(int position)
         {
-            savedDate = new Date().getTime() + (position - 50000) * MILLIS_IN_A_DAY;
             Bundle dateBundle = new Bundle();
-            dateBundle.putLong("date", savedDate);
+            dateBundle.putLong("date", DailyViewFragmentPositioner.getFragmentPosition(position));
             DailyViewFragment dailyViewFragment = new DailyViewFragment();
             dailyViewFragment.setArguments(dateBundle);
             return dailyViewFragment;
@@ -82,4 +82,6 @@ public class DailyViewActivity extends AppCompatActivity
             return NUM_PAGES;
         }
     }
+
+
 }
