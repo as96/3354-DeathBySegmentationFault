@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -136,9 +137,9 @@ public class EventListManager
         for(int i = 0; i < events.size(); i++)
         {
             //If these conditions are true, then the event overlaps our date range
-            if(events.get(i).getStartDate().before(end))
+            if(events.get(i).getStartDate().compareTo(end) <= 0)
             {
-                if(events.get(i).getEndDate().after(start))
+                if(events.get(i).getEndDate().compareTo(start) >= 0)
                 {
                     resultsArrayList.add(events.get(i));
                 }
@@ -196,6 +197,7 @@ public class EventListManager
     {
         if(containsEvent(e))
         {
+            e.alarm.deschedule();
             events.remove(e);
             writeToFile();
         }

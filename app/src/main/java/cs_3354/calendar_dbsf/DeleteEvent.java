@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by Trent on 12/3/2017.
@@ -21,8 +22,14 @@ import java.util.Date;
 public class DeleteEvent extends DialogFragment
 {
 
-    private Button event;
+    private Button eventButton;
     private LinearLayout layout;
+    private Event event;
+    private EditEvent editEventDialog;
+    long time;
+    public DailyViewFragment dailyViewFragment;
+    public DeleteEvent currentInstance;
+    static HashMap<Event, DeleteEvent> deleteMapper = new HashMap<>();
 
     public static DeleteEvent newInstance(long date)
     {
@@ -33,19 +40,25 @@ public class DeleteEvent extends DialogFragment
         return dialog;
     }
 
-    public void setParams(LinearLayout l, Button b)
+    public void setParams(LinearLayout l, Button b, DailyViewFragment frag)
     {
-        event = b;
+        eventButton = b;
         layout = l;
+        dailyViewFragment = frag;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
+        Bundle bundle = getArguments();
+        time = bundle.getLong("eventTime");
+        currentInstance = this;
+        event = getEvent();
+        deleteMapper.put(event, this);
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.notification_icon)
-                .setTitle("Delete event?")
-                .setPositiveButton("Yes",
+                .setTitle(event.getName())
+                .setPositiveButton("Delete",
                         new DialogInterface.OnClickListener()
                         {
                             @Override
@@ -54,24 +67,53 @@ public class DeleteEvent extends DialogFragment
                                 deleteEvent();
                             }
                         })
-                .setNegativeButton("No",
+                .setNegativeButton("Edit",
                         new DialogInterface.OnClickListener()
                         {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i)
                             {
+                                Bundle bundle = new Bundle();
+                                bundle.putLong("date time", event.getStartDate().getTime());
+                                editEventDialog = new EditEvent();
+                                editEventDialog.setArguments(bundle);
+                                editEventDialog.setFields(dailyViewFragment, currentInstance);
+                                editEventDialog.show(getActivity().getFragmentManager(), "dialog");
+                            }
+                        })
+                .setNeutralButton("Cancel",
+                        new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+                                dialogInterface.cancel();
                             }
                         })
                 .create();
     }
 
+    public Event getEvent()
+    {
+        EventListManager eventListManager = EventListManager.getInstance();
+        Event[] events = eventListManager.getEventsBetween(new Date(time - 1), new Date(time + 1));
+        return events[0];
+    }
+
     public void deleteEvent()
     {
-        layout.removeView(event);
-        Bundle bundle = getArguments();
-        long eventTime = bundle.getLong("eventTime");
+        deleteButton();
         EventListManager eventListManager = EventListManager.getInstance();
-        Event[] events = eventListManager.getEventsBetween(new Date(eventTime - 1), new Date(eventTime + 1));
-        eventListManager.removeEvent(events[0]);
+        eventListManager.removeEvent(event);
+    }
+
+    public void setTime(long t)
+    {
+        time = t;
+    }
+
+    public void deleteButton()
+    {
+        layout.removeView(eventButton);
     }
 }
