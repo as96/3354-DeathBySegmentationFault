@@ -69,7 +69,7 @@ public class CreateEventActivity extends AppCompatActivity
         EditText typeBox = (EditText)findViewById(R.id.text_type);
         type = typeBox.getText().toString();
 
-        final Event newEvent = new Event(startDate, endDate, name, type);
+        final Event newEvent = new Event(startDate, endDate, name, type, getApplicationContext());
         final EventListManager elm = EventListManager.getInstance();
 
         //If there is a time conflict, display a dialog asking if this is okay
@@ -103,7 +103,6 @@ public class CreateEventActivity extends AppCompatActivity
 
         //TODO check for time conflicts
 
-        EventListManager elm = EventListManager.getInstance();
         elm.addEvent(new Event(startDate, endDate, name, type, this));
         finish();
     }
