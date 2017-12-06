@@ -45,5 +45,19 @@ public class Event implements Comparable<Event>, Serializable
 
     public Date getStartDate() { return startDate; }
 
+    public void setStart(Date start)
+    {
+        this.startDate = start;
+    }
+
+    public void setEnd(Date end)
+    {
+        this.endDate = end;
+    }
+
+    public void setType(String type)
+    {
+        this.eventType = type;
+    }
 
 }
