@@ -55,6 +55,8 @@ public class MainActivity extends FragmentActivity {
         imageV = (ImageView) findViewById(R.id.calImageView);
         themeButton = (ImageButton) findViewById(R.id.themeButton);
 
+        App.setContext(this);
+
         //String currentMonth = Integer.toString(mPager.getCurrentItem());
 
         //imageV.setImageResource(getDrawable(this, currentMonth));
