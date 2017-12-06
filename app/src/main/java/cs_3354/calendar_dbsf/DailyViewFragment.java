@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -58,14 +59,15 @@ public class DailyViewFragment extends Fragment {
         toolbar.setTitle(title);
 
         Date earliestOfDay = new Date();
-        earliestOfDay.setTime(time);
-        earliestOfDay.setHours(0);
-        earliestOfDay.setMinutes(0);
-        earliestOfDay.setSeconds(0);
+        earliestOfDay.setTime(fragmentDay.getTime());
         Date latestOfDay = new Date();
         latestOfDay.setTime(earliestOfDay.getTime() + (1000*60*60*24) - 1001);
         EventListManager eventManager = EventListManager.getInstance();
         Event[] events = eventManager.getEventsBetween(earliestOfDay, latestOfDay);
+
+        Toast.makeText(getActivity(), "Found " + events.length + " events",
+                Toast.LENGTH_SHORT).show();
+
         for (int i = 0; i < events.length; i++)
         {
             addEventButton(getActivity(), events[i]);

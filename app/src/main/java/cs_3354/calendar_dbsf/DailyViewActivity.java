@@ -47,10 +47,8 @@ public class DailyViewActivity extends AppCompatActivity
         {
             if(getIntent().hasExtra(sDate))
             {
-
+                savedDate = getIntent().getLongExtra(sDate, savedDate);
             }
-
-            savedDate = getIntent().getLongExtra(sDate, savedDate);
         }
         setContentView(R.layout.activity_daily_view);
 

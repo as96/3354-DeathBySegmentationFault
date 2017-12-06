@@ -117,7 +117,7 @@ public class EventListManager
      */
     public Event[] getAllEvents()
     {
-        return events.toArray(new Event[0]);
+        return events.toArray(new Event[events.size()]);
     }
 
     /**
@@ -136,6 +136,11 @@ public class EventListManager
         //So essentially we have to treat it like an unsorted list
         for(int i = 0; i < events.size(); i++)
         {
+            if(!events.get(i).getStartDate().before(start) && !events.get(i).getEndDate().after(end))
+            {
+                resultsArrayList.add(events.get(i));
+            }
+            /*
             //If these conditions are true, then the event overlaps our date range
             if(events.get(i).getStartDate().compareTo(end) <= 0)
             {
@@ -144,10 +149,11 @@ public class EventListManager
                     resultsArrayList.add(events.get(i));
                 }
             }
+            */
 
         }
 
-        return resultsArrayList.toArray(new Event[0]);
+        return resultsArrayList.toArray(new Event[resultsArrayList.size()]);
     }
 
     /**
@@ -186,6 +192,11 @@ public class EventListManager
         {
             Log.e("InternalStorage", e.getMessage());
         }
+    }
+
+    public int getNumEvents()
+    {
+        return events.size();
     }
 
     /**
