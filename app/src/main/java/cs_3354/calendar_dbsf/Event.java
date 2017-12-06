@@ -15,6 +15,14 @@ public class Event implements Comparable<Event>, Serializable
     String eventType;
     Alarm alarm;
 
+    /**
+     * Event constructor takes in the following parameters:
+     * @param startDate the start date of the event
+     * @param endDate the end date of the event
+     * @param name the name of the event
+     * @param eventType the type of the event
+     * @param c the context of the event
+     */
     public Event(Date startDate, Date endDate, String name, String eventType, Context c)
     {
         this.startDate = startDate;
@@ -26,6 +34,15 @@ public class Event implements Comparable<Event>, Serializable
         alarm = new Alarm(cal, c, this);
     }
 
+    /**
+     * event constructor takes in the following parameters:
+     * @param startDate the start date of the event
+     * @param endDate the end date of the event
+     * @param name the name of the event
+     * @param eventType the type of the event
+     * @param repeat <-->TODO: define this</-->
+     * @param c the context of the event
+     */
     public Event(Date startDate, Date endDate, String name, String eventType, int repeat, Context c)
     {
         this.startDate = startDate;
@@ -49,28 +66,52 @@ public class Event implements Comparable<Event>, Serializable
         return this.getStartDate().compareTo(other.getStartDate());
     }
 
+    /**
+     *
+     * @return the end date of the event
+     */
     public Date getEndDate()
     {
         return endDate;
     }
 
+    /**
+     *
+     * @return the name of the event
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     *
+     * @return the start date of the event
+     */
     public Date getStartDate() { return startDate; }
 
+    /**
+     *
+     * @param start the start date of the event
+     */
     public void setStart(Date start)
     {
         this.startDate = start;
     }
-
+    
+    /**
+     *
+     * @param end the end date of the event
+     */
     public void setEnd(Date end)
     {
         this.endDate = end;
     }
-
+    
+    /**
+     *
+     * @param type the type of the event
+     */
     public void setType(String type)
     {
         this.eventType = type;
