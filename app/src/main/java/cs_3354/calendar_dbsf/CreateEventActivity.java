@@ -65,6 +65,12 @@ public class CreateEventActivity extends AppCompatActivity
                     Toast.LENGTH_SHORT).show();
             return;
         }
+        if(startDate.after(endDate))
+        {
+            Toast.makeText(CreateEventActivity.this, "Start date must be before end date",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         EditText typeBox = (EditText)findViewById(R.id.text_type);
         type = typeBox.getText().toString();
