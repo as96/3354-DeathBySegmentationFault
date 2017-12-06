@@ -101,6 +101,7 @@ public class DailyViewActivity extends AppCompatActivity
     public void startCreateEventActivity(View v)
     {
         Intent intent = new Intent(DailyViewActivity.this, CreateEventActivity.class);
+        intent.putExtra("date", savedDate);
         DailyViewActivity.this.startActivity(intent);
     }
 }

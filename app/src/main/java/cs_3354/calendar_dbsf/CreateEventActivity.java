@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,12 +21,7 @@ import java.util.Date;
 
 public class CreateEventActivity extends AppCompatActivity
 {
-    Calendar currentDate = Calendar.getInstance();
-    final int currentYear = currentDate.get(Calendar.YEAR);
-    final int currentMonth = currentDate.get(Calendar.MONTH);
-    final int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
-    final int currentHour = currentDate.get(Calendar.HOUR);
-    final int currentMinute = currentDate.get(Calendar.MINUTE);
+    Calendar currentDate = new GregorianCalendar();
 
     String name;
     String type;
@@ -41,8 +37,14 @@ public class CreateEventActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         setTitle("Create Event");
 
-        startDate = new Date(currentYear, currentMonth, currentDay, currentHour, currentMinute);
-        endDate = new Date(currentYear, currentMonth, currentDay, currentHour, currentMinute);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null)
+        {
+            currentDate.setTimeInMillis(bundle.getLong("date"));
+        }
+
+        startDate = new Date(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.HOUR), currentDate.get(Calendar.MINUTE));
+        endDate = new Date(currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.HOUR), currentDate.get(Calendar.MINUTE));
 
         initDatePickers();
         initTimePickers();
@@ -138,7 +140,7 @@ public class CreateEventActivity extends AppCompatActivity
                         //Note: we must add 1 to the month because it is zero-indexed
                         startDateBox.setText((int)(selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear);
                     }
-                },currentYear, currentMonth, currentDay);
+                },currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH));
                 datePicker.setTitle("Select start date");
                 datePicker.show();  }
         });
@@ -162,7 +164,7 @@ public class CreateEventActivity extends AppCompatActivity
                         //Note: we must add 1 to the month because it is zero-indexed
                         endDateBox.setText((int)(selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear);
                     }
-                },currentYear, currentMonth, currentDay);
+                },currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH));
                 datePicker.setTitle("Select end date");
                 datePicker.show();
             }
@@ -193,7 +195,7 @@ public class CreateEventActivity extends AppCompatActivity
 
                         startTimeBox.setText( selectedHour + ":" + selectedMinute);
                     }
-                }, currentHour, currentMinute, true);//24 hour time
+                }, currentDate.get(Calendar.HOUR), currentDate.get(Calendar.MINUTE), true);//24 hour time
                 timePicker.setTitle("Select start time");
                 timePicker.show();
             }
@@ -217,7 +219,7 @@ public class CreateEventActivity extends AppCompatActivity
 
                         endTimeBox.setText( selectedHour + ":" + selectedMinute);
                     }
-                }, currentHour, currentMinute, true);//24 hour time
+                }, currentDate.get(Calendar.HOUR), currentDate.get(Calendar.MINUTE), true);//24 hour time
                 timePicker.setTitle("Select end time");
                 timePicker.show();
             }
