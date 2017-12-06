@@ -22,6 +22,12 @@ public class EventDatePicker extends DialogFragment implements DatePickerDialog.
 
     private Long result = new Long(12);
 
+    /**
+     *
+     * <-->TODO: why is 12 in the result field</-->
+     * @param savedInstanceState saves the Instance state of the activity
+     * @return dialog
+     */
     @Override
     public DatePickerDialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -32,6 +38,13 @@ public class EventDatePicker extends DialogFragment implements DatePickerDialog.
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    /**
+     * Sets date according to the selected time
+     * @param view view associated with this function
+     * @param year set year
+     * @param month set month
+     * @param day set day
+     */
     public void onDateSet(DatePicker view, int year, int month, int day)
     {
         Calendar date = Calendar.getInstance();
@@ -41,6 +54,10 @@ public class EventDatePicker extends DialogFragment implements DatePickerDialog.
         result = date.getTimeInMillis();
     }
 
+    /**
+     *
+     * @return date
+     */
     public Long getDate()
     {
         return result;
