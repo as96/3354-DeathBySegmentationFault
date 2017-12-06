@@ -5,14 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -118,7 +113,11 @@ public class DeleteEvent extends DialogFragment
     public Event getEvent()
     {
         EventListManager eventListManager = EventListManager.getInstance();
-        Event[] events = eventListManager.getEventsBetween(new Date(time - 1), new Date(time + 1));
+        Event[] events = eventListManager.getAllEvents();
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].getStartDate().getTime() == time)
+                return events[i];
+        }
 
         return events[0];
     }

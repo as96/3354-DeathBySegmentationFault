@@ -5,17 +5,13 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -34,17 +30,26 @@ public class EditEvent extends DialogFragment
     final EventTimePicker eventStartTimePicker = new EventTimePicker();
     final EventDatePicker eventEndDatePicker = new EventDatePicker();
     final EventTimePicker eventEndTimePicker = new EventTimePicker();
-    EditText eventName;
-    EditText eventType;
-    EditText repeatInterval;
+    private Event oldEvent, newEvent;
+    EditText eventName, eventType, repeatInterval;
     ToggleButton isRepeating;
     Boolean toggled;
+    private long eventTime;
     private DailyViewFragment fragment;
     private DeleteEvent deleteEvent;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
+
+        eventTime = getArguments().getLong("date time");
+        EventListManager eventListManager = EventListManager.getInstance();
+        Event[] events = eventListManager.getAllEvents();
+        for (int i = 0; i < events.length; i++) {
+            if (events[i].getStartDate().getTime() == eventTime)
+                oldEvent = events[i];
+        }
+
 
         final LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -73,11 +78,13 @@ public class EditEvent extends DialogFragment
         layout.addView(endDateButton);
 
         eventName = new EditText(getContext());
-        eventName.setHint("Event Name");
+        eventName.setSingleLine();
+        eventName.setHint(oldEvent.getName());
         layout.addView(eventName);
 
         eventType = new EditText(getContext());
-        eventType.setHint("Event Type");
+        eventType.setSingleLine();
+        eventType.setHint(oldEvent.eventType);
         layout.addView(eventType);
 
         repeatInterval = new EditText(getContext());
@@ -117,26 +124,22 @@ public class EditEvent extends DialogFragment
                                 name = eventName.getText().toString();
                                 type = eventType.getText().toString();
                                 int interval = 0;
-                                Event e;
                                 if (!toggled) {
-                                    e = new Event(startDate, endDate, name, type, getContext());
+                                    newEvent = new Event(startDate, endDate, name, type, getContext());
                                 }
                                 else
                                 {
                                     interval = Integer.decode(repeatInterval.getText().toString());
-                                    e = new Event(startDate, endDate, name, type, interval, getContext());
+                                    newEvent = new Event(startDate, endDate, name, type, interval, getContext());
                                 }
                                 EventListManager eventListManager = EventListManager.getInstance();
-                                eventListManager.addEvent(e);
-                                long eventTime = getArguments().getLong("date time");
-                                Event event = (eventListManager.getEventsBetween(new Date(eventTime-1),
-                                        new Date(eventTime+1)))[0];
+                                eventListManager.addEvent(newEvent);
                                 GregorianCalendar gregCal = new GregorianCalendar();
                                 gregCal.setTimeInMillis(startDate.getTime());
-                                eventListManager.removeEvent(event);
+                                eventListManager.removeEvent(oldEvent);
                                 deleteEvent.setTime(eventTime);
                                 deleteEvent.deleteButton();
-                                fragment.addEventButton(getActivity(), e);
+                                fragment.addEventButton(getActivity(), newEvent);
                             }
                         })
                 .setNegativeButton("Cancel",
