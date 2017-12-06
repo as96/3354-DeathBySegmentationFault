@@ -36,6 +36,13 @@ public class MonthlyViewFragment extends Fragment
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +60,13 @@ public class MonthlyViewFragment extends Fragment
         CalendarView calendarView = (CalendarView)v.findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
         {
+            /**
+             *
+             * @param view
+             * @param year
+             * @param month
+             * @param dayOfMonth
+             */
             @Override
             public void onSelectedDayChange(CalendarView view, int year,
                                             int month, int dayOfMonth)
