@@ -2,7 +2,6 @@ package cs_3354.calendar_dbsf;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -28,7 +27,7 @@ public class CustomCalendarView extends LinearLayout
 {
     private GridView calendarGridView;
     private static final int MAX_CALENDAR_COLUMN = 42;
-    private int month, year;
+//    private int month, year;
     private SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", Locale.US);
     private Calendar cal = Calendar.getInstance(Locale.ENGLISH);
     private Date fragmentDate;
@@ -78,16 +77,9 @@ public class CustomCalendarView extends LinearLayout
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
 
-                //Bundle and Intent to go to daily view?
-
-                //Goes to daily view, but we need to pass the date along to go to the right day
+                long l = mAdapter.getDate(position);
                 Intent intent = new Intent(context, DailyViewActivity.class);
-                Date date = new Date();
-                //date.setTime(MonthlyViewFragment.inflaterDates.get(inf));
-                Bundle bundle = new Bundle();
-                Log.i("DATE,DUDE",date.toString());
-                bundle.putLong("date", date.getTime());
-                intent.putExtras(bundle);
+                intent.putExtra(DailyViewActivity.sDate, l);
                 context.startActivity(intent);
             }
         });
@@ -104,7 +96,7 @@ public class CustomCalendarView extends LinearLayout
             dayValueInCells.add(mCal.getTime());
             mCal.add(Calendar.DAY_OF_MONTH, 1);
         }
-        //String sDate = formatter.format(cal.getTime());
+        String sDate = formatter.format(cal.getTime());
         mAdapter = new GridAdapter(context, dayValueInCells, cal, eventList);
         calendarGridView.setAdapter(mAdapter);
     }

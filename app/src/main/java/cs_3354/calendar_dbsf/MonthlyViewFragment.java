@@ -15,24 +15,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.GregorianCalendar;
 
 /**
  *
  * Created by Alec and Hajung 11/30/17
  */
-public class MonthlyViewFragment extends Fragment {
+public class MonthlyViewFragment extends Fragment
+{
 
-    public static HashMap<LayoutInflater, Long> inflaterDates;
-
-    Context context;
-    public MonthlyViewFragment() {
+    public MonthlyViewFragment()
+    {
         // Required empty public constructor
     }
 
@@ -41,27 +38,20 @@ public class MonthlyViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         //fragmentDate.setTime(savedInstanceState.getLong("date"));
         // Inflate the layout for this fragment
+        //I'm supposed to instantiate the Custom Calendar View
         View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
-        //This is where we set up the calendar
 
-        Log.i("DATE,DUDE",inflater.toString());
-        //Log.i("DATE,DUDE",String.valueOf(inflaterDates.get(inflater)));
+        //here be testing garbage
+        GregorianCalendar cal = new GregorianCalendar();
+        Bundle dateBundle = getArguments();
+        long time = dateBundle.getLong("date");
+        cal.setTimeInMillis(time);
+        CustomCalendarView ccv = new CustomCalendarView(v.getContext());
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.addView(ccv);
+        //
 
         return v;
     }
-
-    @Override
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
-    {
-        super.onInflate(activity, attrs, savedInstanceState);
-    }
-
-    public void setTheme(View v)
-    {
-       Intent intent = new Intent(v.getContext(), themeActivity.class);
-       startActivity(intent);
-
-    }
-
 }
 
