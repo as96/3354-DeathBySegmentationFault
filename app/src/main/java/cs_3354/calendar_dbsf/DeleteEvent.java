@@ -52,11 +52,12 @@ public class DeleteEvent extends DialogFragment
      * @param b
      * @param frag
      */
-    public void setParams(LinearLayout l, Button b, DailyViewFragment frag)
+    public void setParams(LinearLayout l, Button b, DailyViewFragment frag, Event e)
     {
         eventButton = b;
         layout = l;
         dailyViewFragment = frag;
+        event = e;
     }
 
     /**
@@ -70,7 +71,6 @@ public class DeleteEvent extends DialogFragment
         Bundle bundle = getArguments();
         time = bundle.getLong("eventTime");
         currentInstance = this;
-        event = getEvent();
         deleteMapper.put(event, this);
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.notification_icon)
@@ -119,6 +119,7 @@ public class DeleteEvent extends DialogFragment
     {
         EventListManager eventListManager = EventListManager.getInstance();
         Event[] events = eventListManager.getEventsBetween(new Date(time - 1), new Date(time + 1));
+
         return events[0];
     }
 

@@ -61,7 +61,6 @@ public class DailyViewFragment extends Fragment {
         fragmentDay.setHours(0);
         fragmentDay.setMinutes(0);
         fragmentDay.setSeconds(0);
-        Log.i("TEST:3", fragmentDay.toString());
         eventFragmentMap.put(fragmentDay.getTime(), this);
         cal.setTimeInMillis(time);
         String title = "" + String.valueOf(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, getDefault())) + " " +
@@ -77,6 +76,7 @@ public class DailyViewFragment extends Fragment {
         latestOfDay.setTime(earliestOfDay.getTime() + (1000*60*60*24) - 1001);
         EventListManager eventManager = EventListManager.getInstance();
         Event[] events = eventManager.getEventsBetween(earliestOfDay, latestOfDay);
+
 
         Toast.makeText(getActivity(), "Found " + events.length + " events",
                 Toast.LENGTH_SHORT).show();
@@ -94,10 +94,11 @@ public class DailyViewFragment extends Fragment {
      * Adds an event on the appropriate daily view. This is a button because we can press it and
      * take it to another activity.
      * @param activity <-->TODO: This is never used, should it be?</-->
-     * @param e the event to be added as a button
+     * @param ev the event to be added as a button
      */
-    public void addEventButton(Activity activity, Event e)
+    public void addEventButton(Activity activity, Event ev)
     {
+        final Event e = ev;
         final long startTime = e.getStartDate().getTime();
         final Button event = new Button(getActivity());
         event.setTextColor(Color.BLACK);
@@ -116,7 +117,7 @@ public class DailyViewFragment extends Fragment {
         event.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 DeleteEvent dialog = DeleteEvent.newInstance(startTime);
-                dialog.setParams(layout, event, fragment);
+                dialog.setParams(layout, event, fragment, e);
                 dialog.show(getActivity().getFragmentManager(), "dialog");
             }
         });

@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -84,6 +85,8 @@ public class CreateEventActivity extends AppCompatActivity
         EditText typeBox = (EditText)findViewById(R.id.text_type);
         type = typeBox.getText().toString();
 
+        startDate.setYear(startDate.getYear()-1900);
+        endDate.setYear(endDate.getYear()-1900);
         final Event newEvent = new Event(startDate, endDate, name, type, getApplicationContext());
         final EventListManager elm = EventListManager.getInstance();
 
@@ -113,6 +116,8 @@ public class CreateEventActivity extends AppCompatActivity
         else
         {
             elm.addEvent(newEvent);
+
+            Log.i("TESTTESTTEST", elm.getAllEvents()[0].getStartDate().toString());
             finish();
         }
     }
