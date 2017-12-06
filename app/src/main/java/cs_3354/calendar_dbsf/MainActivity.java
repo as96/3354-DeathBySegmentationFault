@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Xml;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import junit.framework.Assert;
@@ -39,8 +40,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        setContentView(R.layout.fragment_monthly_view);
+        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.fragment_monthly_view);
         //CustomCalendarView c = new CustomCalendarView(context);
         cal = new GregorianCalendar();
         cal.setTimeInMillis(new Date().getTime());
@@ -48,13 +49,13 @@ public class MainActivity extends FragmentActivity {
         Bundle bundle = new Bundle();
         bundle.putLong("date", savedDate);
 
-        Intent intent = new Intent(this, MonthlyViewFragment.class);
-        intent.putExtras(bundle);
+        //Intent intent = new Intent(this, MonthlyViewFragment.class);
+        //intent.putExtras(bundle);
 //        startActivity(intent);
 
 
 
-        imageV = (ImageView) findViewById(R.id.calImageView);
+        //imageV = (ImageView) findViewById(R.id.calImageView);
 
         App.setContext(this);
 
@@ -62,9 +63,10 @@ public class MainActivity extends FragmentActivity {
 
         //imageV.setImageResource(getDrawable(this, currentMonth));
 
-        CustomCalendarView mView = (CustomCalendarView) findViewById(R.id.custom_calendar);
+        //CustomCalendarView mView = (CustomCalendarView) findViewById(R.id.custom_calendar);
 
-        imageV.getDrawable();
+        //imageV.getDrawable();
+
         mPager = (ViewPager)findViewById(R.id.monthPager);
         mPagerAdapter = new MonthPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
@@ -76,6 +78,11 @@ public class MainActivity extends FragmentActivity {
 
     //Need methods that utilize setUpCalendarAdapter and change the month upon swipe
 
+    public void createEvent(View v)
+    {
+        Intent intent = new Intent(MainActivity.this, CreateEventActivity.class);
+        MainActivity.this.startActivity(intent);
+    }
 
     //Will draw the calendar image
     public static int getDrawable(Context context, String name)
