@@ -33,7 +33,7 @@ public class EventCreationTest
     @Test
     public void testTypeLength()
     {
-        type = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        type = "ABCDEFGHIJKLMNOPQRSTUVWXY";
         assertEquals(false, createEventActivity.checkNameLength(name));
 
     }
