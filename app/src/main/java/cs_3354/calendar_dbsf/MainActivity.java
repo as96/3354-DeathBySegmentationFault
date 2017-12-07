@@ -40,15 +40,15 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_monthly_view);
         cal = new GregorianCalendar();
         cal.setTimeInMillis(new Date().getTime());
         long savedDate = new Date().getTime();
         Bundle bundle = new Bundle();
         bundle.putLong("date", savedDate);
-
         App.setContext(this);
-
+        /*
         CalendarView calendarView = (CalendarView)findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
         {
@@ -62,18 +62,19 @@ public class MainActivity extends FragmentActivity {
                 intent.putExtra(DailyViewActivity.sDate, selectedDate.getTime());
                 MainActivity.this.startActivity(intent);
             }
-        });
+        });*/
 
         //Old way of scrolling through months
-        /*
+        //CustomCalendarView mView = (CustomCalendarView) findViewById(R.id.custom_calendar);
+
         mPager = (ViewPager)findViewById(R.id.monthPager);
         mPagerAdapter = new MonthPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(5000);
-        */
+
 
 //        Intent intent = new Intent(this, DailyViewActivity.class);
-//        startActivity(intent);*/
+//        startActivity(intent);
     }
 
     //Need methods that utilize setUpCalendarAdapter and change the month upon swipe
@@ -93,7 +94,7 @@ public class MainActivity extends FragmentActivity {
         return context.getResources().getIdentifier(name, "drawable", context.getPackageName());
     }
 
-    /*
+
     private class MonthPagerAdapter extends FragmentStatePagerAdapter
     {
         public MonthPagerAdapter(FragmentManager fm)
@@ -119,5 +120,5 @@ public class MainActivity extends FragmentActivity {
             return NUM_PAGES;
         }
     }
-    */
+
 }

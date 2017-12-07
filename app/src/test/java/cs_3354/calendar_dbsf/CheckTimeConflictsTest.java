@@ -50,7 +50,7 @@ public class CheckTimeConflictsTest extends InstrumentationTestCase {
     }
 
     @Test
-    public void conflicts2()
+    public void testConflicts2()
     {
         Date d1 = new Date("07/22/2017");
         Date d2 = new Date("07/22/2017");
@@ -67,7 +67,7 @@ public class CheckTimeConflictsTest extends InstrumentationTestCase {
     }
 
     @Test
-    public void conflicts1()
+    public void testConflicts1()
     {
         Date d1 = new Date("11/23/2017");
         Date d2 = new Date("11/24/2017");

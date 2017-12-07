@@ -42,8 +42,10 @@ public class MonthlyViewFragment extends Fragment
         //fragmentDate.setTime(savedInstanceState.getLong("date"));
         // Inflate the layout for this fragment
         //I'm supposed to instantiate the Custom Calendar View
-        final View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
+        //View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
 
+
+        /*Grant's stuff
         //Update calendar based on the provided date and time
         GregorianCalendar cal = new GregorianCalendar();
         Bundle dateBundle = getArguments();
@@ -63,7 +65,7 @@ public class MonthlyViewFragment extends Fragment
                 intent.putExtra(DailyViewActivity.sDate, selectedDate.getTime());
                 v.getContext().startActivity(intent);
             }
-        });
+        });*/
 
         /*
         //Set month label to the correct month
@@ -78,7 +80,34 @@ public class MonthlyViewFragment extends Fragment
         yearLabel.setText("" + year);
         */
 
+        /**
+         * My stuff
+         */
+        //fragmentDate.setTime(savedInstanceState.getLong("date"));
+        // Inflate the layout for this fragment
+        //I'm supposed to instantiate the Custom Calendar View
+        View v =  inflater.inflate(R.layout.fragment_monthly_view, container, false);
+        CustomCalendarView mView = (CustomCalendarView) v.findViewById(R.id.custom_calendar);
+
+
+        //here be testing garbage
+        GregorianCalendar cal = new GregorianCalendar();
+        Bundle dateBundle = getArguments();
+        long time = dateBundle.getLong("date");
+        cal.setTimeInMillis(time);
+
+       LinearLayout layout = new LinearLayout(getActivity());
+
+
+
         return v;
     }
+
+    public void createEvent(View v)
+    {
+        Intent intent = new Intent(this.getActivity(), CreateEventActivity.class);
+        MonthlyViewFragment.this.startActivity(intent);
+    }
+
 }
 
