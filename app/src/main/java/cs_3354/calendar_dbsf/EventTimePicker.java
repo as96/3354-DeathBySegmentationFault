@@ -18,6 +18,11 @@ public class EventTimePicker extends DialogFragment implements TimePickerDialog.
     private int hour;
     private int minute;
 
+    /**
+     *
+     * @param savedInstanceState saves the Instance state of the activity
+     * @return dialog
+     */
     @Override
     public TimePickerDialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -29,17 +34,31 @@ public class EventTimePicker extends DialogFragment implements TimePickerDialog.
                 DateFormat.is24HourFormat(getActivity()));
     }
 
+    /**
+     * Sets the hour and the minute for the event
+     * @param view view associated with this function
+     * @param h hour on time set
+     * @param m minute on time set
+     */
     public void onTimeSet(TimePicker view, int h, int m)
     {
         hour = h;
         minute = m;
     }
 
+    /**
+     *
+     * @return hour
+     */
     public int getHour()
     {
         return hour;
     }
-
+    
+    /**
+     *
+     * @return minute
+     */
     public int getMinute()
     {
         return minute;
