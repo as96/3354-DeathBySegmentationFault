@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -99,6 +100,15 @@ public class CreateEventActivity extends AppCompatActivity
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+                            for (int i = 0; i < DailyViewFragment.dailyViewFragList.size(); i++)
+                            {
+                                Date eOD = DailyViewFragment.dailyViewFragList.get(i).earliestOfDay;
+                                Date lOD = DailyViewFragment.dailyViewFragList.get(i).latestOfDay;
+                                if ((eOD.before(startDate) && lOD.before(startDate)) ||
+                                        eOD.getTime() == startDate.getTime() ||
+                                        lOD.getTime() == startDate.getTime());
+                            }
+
                             elm.addEvent(newEvent);
                             finish();
                         }
@@ -114,6 +124,15 @@ public class CreateEventActivity extends AppCompatActivity
         }
         else
         {
+            for (int i = 0; i < DailyViewFragment.dailyViewFragList.size(); i++)
+            {
+                Date eOD = DailyViewFragment.dailyViewFragList.get(i).earliestOfDay;
+                Date lOD = DailyViewFragment.dailyViewFragList.get(i).latestOfDay;
+                if ((eOD.before(startDate) && startDate.before(lOD)) ||
+                        eOD.equals(startDate) ||
+                        lOD.equals(startDate))
+                    DailyViewFragment.dailyViewFragList.get(i).addEventButton(newEvent, this);
+            }
             elm.addEvent(newEvent);
 
             finish();
