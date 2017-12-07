@@ -23,7 +23,8 @@ public class AlarmNotification extends BroadcastReceiver
 {
 
     /**
-     *<-->TODO: What does this do?</-->
+     *Triggered when the current time is the same time as the time registered by a current alarm.
+     * Shows the notification at the of the screen.
      * @param context a Context
      * @param intent an Intent
      */

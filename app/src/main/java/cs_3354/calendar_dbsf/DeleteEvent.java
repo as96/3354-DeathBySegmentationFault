@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.util.HashMap;
 
 /**
  * Created by Trent on 12/3/2017.
@@ -24,10 +23,8 @@ public class DeleteEvent extends DialogFragment
     long time;
     public DailyViewFragment dailyViewFragment;
     public DeleteEvent currentInstance;
-    static HashMap<Event, DeleteEvent> deleteMapper = new HashMap<>();
 
     /**
-     * <-->TODO:Is this right?</-->
      * Creates a new instance of a DeleteEvent dialog
      * @param date a date as a long, which will be passed along as the event time
      * @return A dialog box that contains information of the event to delete
@@ -42,7 +39,7 @@ public class DeleteEvent extends DialogFragment
     }
 
     /**
-     *
+     *Sets the parameters needed for the class to function
      * @param l
      * @param b
      * @param frag
@@ -66,7 +63,6 @@ public class DeleteEvent extends DialogFragment
         Bundle bundle = getArguments();
         time = bundle.getLong("eventTime");
         currentInstance = this;
-        deleteMapper.put(event, this);
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.notification_icon)
                 .setTitle(event.getName())
@@ -106,7 +102,6 @@ public class DeleteEvent extends DialogFragment
     }
 
     /**
-     * <-->TODO:Is this right? Why are we storing events in an array?</-->
      * Gets the event to be deleted
      * @return
      */

@@ -15,13 +15,18 @@ import java.util.Date;
 
 /**
  * Created by Trent on 12/5/2017.
+ * Interface for entering a date for an event being edited
  */
-
 public class EventDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener
 {
 
-    private Long result = new Long(12);
+    private long result = 12;
 
+    /**
+     * Show the dialog for picking a date
+     * @param savedInstanceState the set of data stored in the background
+     * @return The dialog for picking a date
+     */
     @Override
     public DatePickerDialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -32,6 +37,13 @@ public class EventDatePicker extends DialogFragment implements DatePickerDialog.
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
+    /**
+     * Called when the OK button is clicked in the date picker
+     * @param view view of the datepicker that was set
+     * @param year the year of the date picked
+     * @param month the month of the date picked
+     * @param day the day of the date picked
+     */
     public void onDateSet(DatePicker view, int year, int month, int day)
     {
         Calendar date = Calendar.getInstance();
@@ -41,6 +53,10 @@ public class EventDatePicker extends DialogFragment implements DatePickerDialog.
         result = date.getTimeInMillis();
     }
 
+    /**
+     * Return the date that was chosen
+     * @return the date picker's result
+     */
     public Long getDate()
     {
         return result;

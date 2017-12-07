@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,13 +27,9 @@ public class CustomCalendarView extends LinearLayout
 {
     private GridView calendarGridView;
     private static final int MAX_CALENDAR_COLUMN = 42;
-//    private int month, year;
-    private SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", Locale.US);
     private Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-    private Date fragmentDate;
     private Context context;
     private GridAdapter mAdapter;
-    private LayoutInflater inf;
 
     public CustomCalendarView(Context context)
     {
@@ -60,7 +55,7 @@ public class CustomCalendarView extends LinearLayout
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.calendar_layout, this);
-        calendarGridView = (GridView)view.findViewById(R.id.calendar_grid);
+        calendarGridView = view.findViewById(R.id.calendar_grid);
     }
 
     private void setGridCellClickEvents(){
@@ -69,7 +64,6 @@ public class CustomCalendarView extends LinearLayout
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-
                 long l = mAdapter.getDate(position);
                 Intent intent = new Intent(context, DailyViewActivity.class);
                 intent.putExtra(DailyViewActivity.sDate, l);
@@ -79,6 +73,7 @@ public class CustomCalendarView extends LinearLayout
     }
 
     private void setUpCalendarAdapter(){
+
         List<Date> dayValueInCells = new ArrayList<>();
         List<Event> eventList = Arrays.asList(EventListManager.getInstance().getAllEvents());
         Calendar mCal = (Calendar)cal.clone();
@@ -89,7 +84,6 @@ public class CustomCalendarView extends LinearLayout
             dayValueInCells.add(mCal.getTime());
             mCal.add(Calendar.DAY_OF_MONTH, 1);
         }
-        String sDate = formatter.format(cal.getTime());
         mAdapter = new GridAdapter(context, dayValueInCells, cal, eventList);
         calendarGridView.setAdapter(mAdapter);
     }
