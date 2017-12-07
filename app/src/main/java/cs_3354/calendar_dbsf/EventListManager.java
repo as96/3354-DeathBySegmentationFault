@@ -209,7 +209,8 @@ public class EventListManager
     {
         if(containsEvent(e))
         {
-            e.alarm.deschedule();
+            if (e.alarmSet)
+                e.alarm.deschedule();
             events.remove(e);
             writeToFile();
         }

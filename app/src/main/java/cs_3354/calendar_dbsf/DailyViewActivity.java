@@ -107,6 +107,7 @@ public class DailyViewActivity extends AppCompatActivity
         public int getCount(){
             return NUM_PAGES;
         }
+
     }
 
 
@@ -120,4 +121,5 @@ public class DailyViewActivity extends AppCompatActivity
         intent.putExtra("date", savedDate);
         DailyViewActivity.this.startActivity(intent);
     }
+
 }

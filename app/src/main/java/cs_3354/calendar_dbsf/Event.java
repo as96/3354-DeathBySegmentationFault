@@ -13,7 +13,8 @@ public class Event implements Comparable<Event>, Serializable
     Date endDate;
     String name;
     String eventType;
-    transient Alarm alarm;
+    Alarm alarm;
+    Boolean alarmSet;
 
     /**
      * Event constructor takes in the following parameters:
@@ -29,9 +30,14 @@ public class Event implements Comparable<Event>, Serializable
         this.endDate = endDate;
         this.name = name;
         this.eventType = eventType;
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTimeInMillis(startDate.getTime());
-        alarm = new Alarm(cal, c, this);
+        alarmSet = false;
+        GregorianCalendar cal1 = new GregorianCalendar();
+        cal1.setTimeInMillis(startDate.getTime());
+        if (!startDate.before(new Date()))
+        {
+            alarm = new Alarm(cal1, c, this);
+            alarmSet = true;
+        }
     }
 
     /**
@@ -49,9 +55,14 @@ public class Event implements Comparable<Event>, Serializable
         this.endDate = endDate;
         this.name = name;
         this.eventType = eventType;
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTimeInMillis(startDate.getTime());
-        alarm = new Alarm(cal, repeat*DailyViewFragmentPositioner.MILLIS_IN_A_DAY, c, this);
+        GregorianCalendar cal2 = new GregorianCalendar();
+        cal2.setTimeInMillis(startDate.getTime());
+        alarmSet = false;
+        if (!startDate.before(new Date()))
+        {
+            alarm = new Alarm(cal2, repeat * DailyViewFragmentPositioner.MILLIS_IN_A_DAY, c, this);
+            alarmSet = true;
+        }
     }
 
     /**
