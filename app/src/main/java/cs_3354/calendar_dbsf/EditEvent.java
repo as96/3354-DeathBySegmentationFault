@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -17,8 +18,8 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by Trent on 12/5/2017.
+ * Provides the interface for and executes the editing of events
  */
-
 public class EditEvent extends DialogFragment
 {
 
@@ -33,11 +34,16 @@ public class EditEvent extends DialogFragment
     private Event oldEvent, newEvent;
     EditText eventName, eventType, repeatInterval;
     ToggleButton isRepeating;
-    Boolean toggled;
+    Boolean toggled, startDateChanged, endDateChanged;
     private long eventTime;
     private DailyViewFragment fragment;
     private DeleteEvent deleteEvent;
 
+    /**
+     * Creates the dialog for editing events
+     * @param savedInstanceState the set of data stored in the background
+     * @return The built dialog
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -49,6 +55,10 @@ public class EditEvent extends DialogFragment
             if (events[i].getStartDate().getTime() == eventTime)
                 oldEvent = events[i];
         }
+        startDate = oldEvent.getStartDate();
+        endDate = oldEvent.getEndDate();
+        startDateChanged = false;
+        endDateChanged = false;
 
 
         final LinearLayout layout = new LinearLayout(getContext());
@@ -60,6 +70,7 @@ public class EditEvent extends DialogFragment
             {
                 eventStartDatePicker.show(getActivity().getFragmentManager(), "eventDatePicker");
                 eventStartTimePicker.show(getActivity().getFragmentManager(), "eventTimePicker");
+                startDateChanged = true;
             }
         });
         startDateButton.setText("Start date");
@@ -71,6 +82,7 @@ public class EditEvent extends DialogFragment
             {
                 eventEndDatePicker.show(getActivity().getFragmentManager(), "eventDatePicker");
                 eventEndTimePicker.show(getActivity().getFragmentManager(), "eventTimePicker");
+                endDateChanged = true;
             }
         });
 
@@ -88,11 +100,13 @@ public class EditEvent extends DialogFragment
         layout.addView(eventType);
 
         repeatInterval = new EditText(getContext());
-        repeatInterval.setHint("Repeat Interval (dates)");
+        repeatInterval.setHint("Repeat Interval (in days)");
 
         toggled = false;
         isRepeating = new ToggleButton(getContext());
-        isRepeating.setText("Repeating");
+        isRepeating.setText("Toggle Repeating");
+        isRepeating.setTextOn("Repeating");
+        isRepeating.setTextOff("Not Repeating");
         isRepeating.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -115,21 +129,40 @@ public class EditEvent extends DialogFragment
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                startDate = new Date(eventStartDatePicker.getDate());
-                                startDate.setHours(eventStartTimePicker.getHour());
-                                startDate.setMinutes(eventStartTimePicker.getMinute());
-                                endDate = new Date(eventEndDatePicker.getDate());
-                                endDate.setHours(eventEndTimePicker.getHour());
-                                endDate.setMinutes(eventStartTimePicker.getMinute());
-                                name = eventName.getText().toString();
-                                type = eventType.getText().toString();
-                                int interval = 0;
+                                if (startDateChanged)
+                                {
+                                    startDate = new Date(eventStartDatePicker.getDate());
+                                    startDate.setHours(eventStartTimePicker.getHour());
+                                    startDate.setMinutes(eventStartTimePicker.getMinute());
+                                } else {
+                                    startDate = oldEvent.getStartDate();
+                                }
+
+                                if (endDateChanged)
+                                {
+
+                                    endDate = new Date(eventEndDatePicker.getDate());
+                                    endDate.setHours(eventEndTimePicker.getHour());
+                                    endDate.setMinutes(eventStartTimePicker.getMinute());
+                                } else {
+                                    endDate = oldEvent.getEndDate();
+                                }
+
+                                if (TextUtils.isEmpty(eventName.getText().toString())){
+                                    name = oldEvent.getName();}
+                                else
+                                    name = eventName.getText().toString();
+
+                                if (TextUtils.isEmpty(eventType.getText().toString()))
+                                    type = oldEvent.eventType;
+                                else
+                                    type = eventType.getText().toString();
                                 if (!toggled) {
                                     newEvent = new Event(startDate, endDate, name, type, getContext());
                                 }
                                 else
                                 {
-                                    interval = Integer.decode(repeatInterval.getText().toString());
+                                    int interval = Integer.decode(repeatInterval.getText().toString());
                                     newEvent = new Event(startDate, endDate, name, type, interval, getContext());
                                 }
                                 EventListManager eventListManager = EventListManager.getInstance();
@@ -139,7 +172,7 @@ public class EditEvent extends DialogFragment
                                 eventListManager.removeEvent(oldEvent);
                                 deleteEvent.setTime(eventTime);
                                 deleteEvent.deleteButton();
-                                fragment.addEventButton(getActivity(), newEvent);
+                                fragment.addEventButton(newEvent);
                             }
                         })
                 .setNegativeButton("Cancel",
@@ -153,6 +186,11 @@ public class EditEvent extends DialogFragment
         return builder.create();
     }
 
+    /**
+     * Allows for persisting of data between this class and the class that created it
+     * @param f the DailyViewFragment of the day of the event that is being edited
+     * @param d the DeleteEvent instance of the even that is being edited
+     */
     public void setFields(DailyViewFragment f, DeleteEvent d)
     {
         fragment = f;

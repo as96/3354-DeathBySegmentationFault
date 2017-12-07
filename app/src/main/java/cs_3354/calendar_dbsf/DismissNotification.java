@@ -13,7 +13,7 @@ public class DismissNotification extends BroadcastReceiver
 {
 
     /**
-     * Receives a broadcast intent
+     * Receives the broadcast for dismissing
      * @param context The Context in which the receiver is running.
      * @param intent The Intent being received.
      */

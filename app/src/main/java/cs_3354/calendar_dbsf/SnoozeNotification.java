@@ -11,14 +11,16 @@ import java.util.Date;
 
 /**
  * Created by Trent on 12/2/2017.
+ * Snoozes the alarm notification for 5 minutes.
  */
 
 public class SnoozeNotification extends BroadcastReceiver
 {
+
     /**
-     * <-->TODO: What does this do</-->
-     * @param context a Context
-     * @param intent an Intent
+     * Receives the broadcast for snoozing
+     * @param context The Context in which the receiver is running.
+     * @param intent The Intent being received.
      */
     @Override
     public void onReceive(Context context, Intent intent)
