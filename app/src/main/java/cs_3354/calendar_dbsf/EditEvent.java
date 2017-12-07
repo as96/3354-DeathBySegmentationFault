@@ -172,7 +172,7 @@ public class EditEvent extends DialogFragment
                                 eventListManager.removeEvent(oldEvent);
                                 deleteEvent.setTime(eventTime);
                                 deleteEvent.deleteButton();
-                                fragment.addEventButton(newEvent);
+                                fragment.addEventButton(newEvent, getActivity());
                             }
                         })
                 .setNegativeButton("Cancel",

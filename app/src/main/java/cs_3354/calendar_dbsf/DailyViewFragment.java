@@ -37,6 +37,9 @@ public class DailyViewFragment extends Fragment {
 
     private LinearLayout layout;
     private DailyViewFragment fragment;
+    static ArrayList<DailyViewFragment> dailyViewFragList = new ArrayList<>();
+    Date earliestOfDay, latestOfDay;
+
 
     /**
      * Creates the view hierarchy associated with this fragment
@@ -51,6 +54,7 @@ public class DailyViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
+        dailyViewFragList.add(this);
         fragment = this;
         final ViewGroup viewGroup = container;
         final View v = inflater.inflate(R.layout.content_daily_view, container, false);
@@ -69,25 +73,21 @@ public class DailyViewFragment extends Fragment {
 
         Toolbar toolbar = v.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
-
-        Date earliestOfDay = new Date();
+        earliestOfDay = new Date();
         earliestOfDay.setTime(fragmentDay.getTime());
-        Date latestOfDay = new Date();
+        latestOfDay = new Date();
         latestOfDay.setTime(earliestOfDay.getTime() + (1000*60*60*24) - 1001);
         EventListManager eventManager = EventListManager.getInstance();
-        int count = 0;
         for (int i = 0; i < eventManager.getAllEvents().length; i++)
         {
             Event e = eventManager.getAllEvents()[i];
-            if (e.getStartDate().getTime() > earliestOfDay.getTime() &&
-                e.getEndDate().getTime() < latestOfDay.getTime())
-                addEventButton(e);
-            count++;
+            if ((earliestOfDay.before(e.getStartDate()) && e.getStartDate().before(latestOfDay)) ||
+                    earliestOfDay.equals(e.getStartDate()) ||
+                    latestOfDay.equals(e.getStartDate()))
+            {
+                addEventButton(e, getActivity());
+            }
         }
-
-
-        Toast.makeText(getActivity(), "Found " + String.valueOf(count) + " events",
-                Toast.LENGTH_SHORT).show();
 
         return v;
     }
@@ -97,11 +97,11 @@ public class DailyViewFragment extends Fragment {
      * take it to another activity.
      * @param ev the event to be added as a button
      */
-    public void addEventButton(Event ev)
+    public void addEventButton(Event ev, Activity a)
     {
         final Event e = ev;
         final long startTime = e.getStartDate().getTime();
-        final Button event = new Button(getActivity());
+        final Button event = new Button(a);
         event.setTextColor(Color.BLACK);
         int startHour = e.getStartDate().getHours();
         String hour = startHour > 12 ? "PM" : "AM";
