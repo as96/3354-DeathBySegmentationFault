@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 
 import static java.util.Locale.getDefault;
 
@@ -35,7 +37,6 @@ public class DailyViewFragment extends Fragment {
 
     private LinearLayout layout;
     private DailyViewFragment fragment;
-    static HashMap<Long, DailyViewFragment> eventFragmentMap = new HashMap<>();
 
     /**
      * Creates the view hierarchy associated with this fragment
@@ -53,7 +54,7 @@ public class DailyViewFragment extends Fragment {
         fragment = this;
         final ViewGroup viewGroup = container;
         final View v = inflater.inflate(R.layout.content_daily_view, container, false);
-        layout = (LinearLayout) v.findViewById(R.id.linear_layout);
+        layout = v.findViewById(R.id.linear_layout);
         GregorianCalendar cal = new GregorianCalendar();
         Bundle dateBundle = getArguments();
         long time = dateBundle.getLong("date", 0);
@@ -61,13 +62,12 @@ public class DailyViewFragment extends Fragment {
         fragmentDay.setHours(0);
         fragmentDay.setMinutes(0);
         fragmentDay.setSeconds(0);
-        eventFragmentMap.put(fragmentDay.getTime(), this);
         cal.setTimeInMillis(time);
         String title = "" + String.valueOf(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, getDefault())) + " " +
                 String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + ", " +
                 String.valueOf(cal.get(Calendar.YEAR));
 
-        Toolbar toolbar = (Toolbar)v.findViewById(R.id.toolbar);
+        Toolbar toolbar = v.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
 
         Date earliestOfDay = new Date();
@@ -75,17 +75,19 @@ public class DailyViewFragment extends Fragment {
         Date latestOfDay = new Date();
         latestOfDay.setTime(earliestOfDay.getTime() + (1000*60*60*24) - 1001);
         EventListManager eventManager = EventListManager.getInstance();
-        Event[] events = eventManager.getEventsBetween(earliestOfDay, latestOfDay);
-
-
-        Toast.makeText(getActivity(), "Found " + events.length + " events",
-                Toast.LENGTH_SHORT).show();
-
-        for (int i = 0; i < events.length; i++)
+        int count = 0;
+        for (int i = 0; i < eventManager.getAllEvents().length; i++)
         {
-            addEventButton(getActivity(), events[i]);
+            Event e = eventManager.getAllEvents()[i];
+            if (e.getStartDate().getTime() > earliestOfDay.getTime() &&
+                e.getEndDate().getTime() < latestOfDay.getTime())
+                addEventButton(e);
+            count++;
         }
 
+
+        Toast.makeText(getActivity(), "Found " + String.valueOf(count) + " events",
+                Toast.LENGTH_SHORT).show();
 
         return v;
     }
@@ -93,10 +95,9 @@ public class DailyViewFragment extends Fragment {
     /**
      * Adds an event on the appropriate daily view. This is a button because we can press it and
      * take it to another activity.
-     * @param activity <-->TODO: This is never used, should it be?</-->
      * @param ev the event to be added as a button
      */
-    public void addEventButton(Activity activity, Event ev)
+    public void addEventButton(Event ev)
     {
         final Event e = ev;
         final long startTime = e.getStartDate().getTime();

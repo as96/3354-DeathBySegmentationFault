@@ -3,25 +3,13 @@ package cs_3354.calendar_dbsf;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import static java.util.Locale.getDefault;
 
 /**
  * Handles the creation of the DailyViewActivity
@@ -35,12 +23,10 @@ public class DailyViewActivity extends AppCompatActivity
     private static PagerAdapter mPagerAdapter;
     long savedDate;
     public static final String sDate = "sDate";
-    private static final long MILLIS_IN_A_DAY = (1000 * 60 * 60 * 24);
-    static Toolbar toolbar;
     static Context context;
 
     /**
-     * Handles the initial setup if the DailyViewActivity
+     * Creates pages of DailyViewFragment to display the daily views.
      * @param savedInstanceState saves the Instance state of the activity
      */
     @Override
@@ -49,7 +35,6 @@ public class DailyViewActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         context = this;
-        savedDate = new Date().getTime();
         if(getIntent() != null)
         {
             if(getIntent().hasExtra(sDate))
@@ -59,7 +44,7 @@ public class DailyViewActivity extends AppCompatActivity
         }
         setContentView(R.layout.activity_daily_view);
 
-        mPager = (ViewPager)findViewById(R.id.daypager);
+        mPager = findViewById(R.id.daypager);
         mPagerAdapter = new DayPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(50000);
@@ -67,7 +52,6 @@ public class DailyViewActivity extends AppCompatActivity
     }
 
     /**
-     * <-->TODO:Is this right?</-->
      * Gets the fragment state pager adapter being used
      * @return FragmentStatePagerAdapter being used
      */
@@ -92,7 +76,7 @@ public class DailyViewActivity extends AppCompatActivity
     {
         /**
          * Constructor for the DayPagerAdapter.
-         * @param fm a FragmentManager that is used the superclass's constructor
+         * @param fm The FragmentManager for the pager's fragments
          */
         public DayPagerAdapter(FragmentManager fm)
         {
@@ -102,13 +86,13 @@ public class DailyViewActivity extends AppCompatActivity
         /**
          * Gets the data item at the specified position in the data set. In this case, a fragment
          * @param position the position of the fragment
-         * @return the fragment as the specified position
+         * @return the fragment at the specified position
          */
         @Override
         public Fragment getItem(int position)
         {
             long dailyDate = savedDate;
-            dailyDate += (position - 50000) * MILLIS_IN_A_DAY;
+            dailyDate += DailyViewFragmentPositioner.getFragmentPosition(position);
             Bundle dateBundle = new Bundle();
             dateBundle.putLong("date", dailyDate);
             DailyViewFragment dailyViewFragment = new DailyViewFragment();
@@ -117,8 +101,7 @@ public class DailyViewActivity extends AppCompatActivity
         }
 
         /**
-         * <-->TODO:Is this right?</-->
-         * @return the number of total pages the fragments use
+         * @return the number of total pages the in the pager.
          */
         @Override
         public int getCount(){

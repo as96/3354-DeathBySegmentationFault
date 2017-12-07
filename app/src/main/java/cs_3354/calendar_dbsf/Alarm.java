@@ -124,21 +124,8 @@ public class Alarm
         aManager.cancel(pIntent);
     }
 
-    /**<--TODO-->What does interval do?</--TODO-->
-     * Changes the interval
-     * @param i The new interval.
-     */
-    public void setInterval(long i)
-    {
-        deschedule();
-        long currentTime = android.os.SystemClock.currentThreadTimeMillis();
-        while (currentTime > time)
-            time = time + i;
-        setAlarm(time, i, context);
-    }
-
     /**
-     * TODO: What is stored in date?
+     * The time that this calendar goes off is stored in date.
      * @return
      */
     public GregorianCalendar getTime()

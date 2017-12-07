@@ -11,7 +11,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -41,7 +40,7 @@ public class CreateEventActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Create Event");
 
@@ -117,7 +116,6 @@ public class CreateEventActivity extends AppCompatActivity
         {
             elm.addEvent(newEvent);
 
-            Log.i("TESTTESTTEST", elm.getAllEvents()[0].getStartDate().toString());
             finish();
         }
     }
@@ -199,8 +197,8 @@ public class CreateEventActivity extends AppCompatActivity
                     {
                         startDate.setHours(selectedHour);
                         startDate.setMinutes(selectedMinute);
-
-                        startTimeBox.setText( selectedHour + ":" + selectedMinute);
+                        char emptyDigit = (selectedMinute < 10) ? '0' : '\0';
+                        startTimeBox.setText( selectedHour + ":" + emptyDigit + selectedMinute);
                     }
                 }, currentDate.get(Calendar.HOUR), currentDate.get(Calendar.MINUTE), true);//24 hour time
                 timePicker.setTitle("Select start time");
@@ -223,7 +221,7 @@ public class CreateEventActivity extends AppCompatActivity
                     {
                         endDate.setHours(selectedHour);
                         endDate.setMinutes(selectedMinute);
-
+                        char emptyDigit = (selectedMinute < 10) ? '0' : '\0';
                         endTimeBox.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, currentDate.get(Calendar.HOUR), currentDate.get(Calendar.MINUTE), true);//24 hour time

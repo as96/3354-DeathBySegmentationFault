@@ -60,8 +60,10 @@ public class EventListManager
             //If not, keep iterating
         }
 
+
         //This statement will only be reached if the new event is the last one in the list
         events.add(e);
+
         writeToFile();
     }
 
@@ -216,6 +218,7 @@ public class EventListManager
         {
             throw new NullPointerException ("Event not found in list");
         }
+
     }
 
     /**
