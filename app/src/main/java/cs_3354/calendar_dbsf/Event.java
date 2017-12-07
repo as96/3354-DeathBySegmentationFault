@@ -13,7 +13,7 @@ public class Event implements Comparable<Event>, Serializable
     Date endDate;
     String name;
     String eventType;
-    Alarm alarm;
+    transient Alarm alarm;
 
     /**
      * Event constructor takes in the following parameters:

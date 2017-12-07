@@ -36,7 +36,18 @@ public class EventListManager
     {
         events = new ArrayList<Event>();
 
-        //TODO read events from file here
+        //Try to read events from a file
+        //If this fails, just proceed with an empty events list
+        try
+        {
+            events = readFromFile();
+            Log.e("InternalStorage", "Successfully read events from file");
+        }
+        catch(Exception e)
+        {
+            Log.e("InternalStorage", e.getMessage());
+            Log.e("InternalStorage", "Could not read events from file");
+        }
     }
 
     /**
@@ -171,29 +182,17 @@ public class EventListManager
     /**
      * Reads in events that have been saved to a file
      */
-    public void readFromFile()
+    public ArrayList<Event> readFromFile() throws IOException, ClassNotFoundException
     {
-        events = new ArrayList<Event>();
+        ArrayList<Event> eventsOnFile;
         FileInputStream fis;
-        try
-        {
-            fis = App.getContext().openFileInput(fileName);
-            ObjectInputStream oi = new ObjectInputStream(fis);
-            events = (ArrayList<Event>)oi.readObject();
-            oi.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            Log.e("InternalStorage", e.getMessage());
-        }
-        catch (IOException e)
-        {
-            Log.e("InternalStorage", e.getMessage());
-        }
-        catch (ClassNotFoundException e)
-        {
-            Log.e("InternalStorage", e.getMessage());
-        }
+
+        fis = App.getContext().openFileInput(fileName);
+        ObjectInputStream oi = new ObjectInputStream(fis);
+        eventsOnFile = (ArrayList<Event>)oi.readObject();
+        oi.close();
+
+        return eventsOnFile;
     }
 
     public int getNumEvents()
