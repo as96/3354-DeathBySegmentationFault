@@ -16,6 +16,8 @@ public class Event implements Comparable<Event>, Serializable
     transient Alarm alarm;
     Boolean alarmSet;
 
+    private static final long serialVersionUID = 42L;
+
     /**
      * Event constructor takes in the following parameters:
      * @param startDate the start date of the event
