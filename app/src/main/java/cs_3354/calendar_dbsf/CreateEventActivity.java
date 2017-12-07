@@ -69,12 +69,8 @@ public class CreateEventActivity extends AppCompatActivity
         EditText nameBox = (EditText)findViewById(R.id.text_name);
         name = nameBox.getText().toString();
 
-        if(name.length() < 1)
-        {
-            Toast.makeText(CreateEventActivity.this, "Please input an event name",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
+        checkNameLength(name);
+
         if(startDate.after(endDate))
         {
             Toast.makeText(CreateEventActivity.this, "Start date must be before end date",
@@ -84,6 +80,8 @@ public class CreateEventActivity extends AppCompatActivity
 
         EditText typeBox = (EditText)findViewById(R.id.text_type);
         type = typeBox.getText().toString();
+
+        checkTypeLength(type);
 
         startDate.setYear(startDate.getYear()-1900);
         endDate.setYear(endDate.getYear()-1900);
@@ -137,6 +135,31 @@ public class CreateEventActivity extends AppCompatActivity
 
             finish();
         }
+    }
+
+    public boolean checkNameLength(String n)
+    {
+        if(n.equals(null) || n.length() > 20)
+        {
+            Toast.makeText(CreateEventActivity.this, "Please input a valid event name (20 chars max)",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean checkTypeLength(String t)
+    {
+
+        if(t.length() > 20)
+        {
+            Toast.makeText(CreateEventActivity.this, "Please input a proper event category (20 chars max) ",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     /**
